@@ -1,0 +1,28 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #A06D21 ;
+    background-image: url('../media/images/background.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.container .title {
+    text-align: center;
+}
+
+.title {
+    color: #FFCC00;
+    padding-top: 20px;
+    padding-bottom: 40px;;
+}
+
+.container .body {
+    color: #ffffff;
+    padding: 20px;
+}

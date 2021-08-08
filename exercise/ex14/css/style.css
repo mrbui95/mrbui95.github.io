@@ -1,0 +1,32 @@
+.container .title {
+    color: white;
+    background-color: blue;
+    font-weight: 800;
+    font-size: 20px;
+    text-align: center;
+    padding: 15px;
+}
+
+.container .body-content .list-of-contents {
+    float: left;
+    width: 30%;
+}
+
+.container .body-content .list-of-contents .content-data-link {
+    cursor: pointer;
+}
+
+.container .body-content .list-of-contents .content-data:visited {
+    color: mediumpurple;
+}
+
+.container .body-content .content-preview {
+    float: right;
+    width: 65%;
+    height: 500px;
+}
+
+.container .body-content .content-preview #content-preview-frame {
+    width: 100%;
+    height: 100%;
+}

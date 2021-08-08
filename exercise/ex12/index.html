@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo form và các điều khiển</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Phiếu đăng ký tham gia chương trình khuyến mại</h1>
+        <div class="body-content">
+            <div class="table-form-container">
+                <table class="register-form">
+                    <tr class="table-row">
+                        <td class="table-row-data"><label for="username-input">Họ và tên:</label></td>
+                        <td class="table-row-data">
+                            <input id="username-input" class="input" type="text">
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data"><label for="address-input">Địa chỉ:</label></td>
+                        <td class="table-row-data">
+                            <input id="address-input" class="input" type="text">
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data"><label for="phone-input">Số điện thoại:</label></td>
+                        <td class="table-row-data">
+                            <input id="phone-input" class="input" type="number">
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data">Giới tính</td>
+                        <td class="table-row-data">
+                            <input type="radio" id="male" name="gender" value="0" checked="checked">
+                            <label for="html">Nam</label>
+                            <input type="radio" id="female" name="gender" value="1">
+                            <label for="css">Nữ</label>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data">Nghề nghiệp</td>
+                        <td class="table-row-data">
+                            <select name="cars" id="cars">
+                                <option value="teacher">Giáo viên</option>
+                                <option value="doctor">Bác sĩ</option>
+                                <option value="farmer">Nông dân</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data">Chọn sản phẩm tham gia</td>
+                        <td class="table-row-data">
+                            <select name="cars" id="cars" multiple>
+                                <option value="toothpaste">Kem đánh răng</option>
+                                <option value="washing-powder">Bột giặt</option>
+                                <option value="shampoo">Dầu gội</option>
+                                <option value="shower-gel">Sữa tắm</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data"><label for="predict-input">Số người dự đoán tham gia:</label></td>
+                        <td class="table-row-data">
+                            <input id="predict-input" class="input" type="number">
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data" colspan="2">
+                            <button class="register-button"
+                                onclick="getElementById('register-success-noti').style.display = 'table-row'"
+                            >Đăng ký</button>
+                        </td>
+                    </tr>
+                    <tr class="table-row" id="register-success-noti">
+                        <td class="table-row-data" colspan="2">
+                            <div class="register-success-noti-content">Bạn đã đăng ký thành công!!</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

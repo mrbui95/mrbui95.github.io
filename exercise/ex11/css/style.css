@@ -1,0 +1,36 @@
+.container .title {
+    color: darkgoldenrod;
+    text-align: center;
+}
+
+.container .body-content .table-container table, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.container .body-content .table-container .login-form {
+    margin: auto;
+    background-color: lightblue;
+}
+
+.container .body-content .table-container .login-form .table-row .table-row-data .input {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.container .body-content .table-container .login-form .table-row .table-row-data .login-button {
+    margin: 3px auto;
+    display: block;
+}
+
+.container .body-content .table-container .login-form .user-code {
+    display: none;
+}
+
+.container .body-content .table-container .login-form .show {
+    display: table-row;
+}
+
+.container .body-content .table-container .login-form .table-row .table-row-data .user-code-info {
+    text-align: center;
+}

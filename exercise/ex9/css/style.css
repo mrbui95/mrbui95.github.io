@@ -1,0 +1,29 @@
+.container {
+    font-family: Tahoma, sans-serif;
+}
+
+.container .title {
+    color: red;
+    text-align: center;
+}
+
+.container .body-content table, tr, th, td {
+    border: 1px solid red;
+    border-collapse: collapse;
+}
+
+.container .body-content .table-container .list-class .table-head .table-head-data {
+    background-color: #CC0033;
+    color: white;
+}
+
+.container .body-content .table-container .list-class td[rowspan]:not([rowspan=""]):first-child {
+    color: red;
+}
+
+.container .body-content .table-container .list-class td:last-child,
+.container .body-content .table-container .list-class td:nth-last-child(2) {
+    text-align: center;
+}
+
+

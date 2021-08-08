@@ -1,0 +1,23 @@
+.container .title {
+    color: #006600;
+    text-align: center;
+}
+
+.container .body-content {
+    font-style: italic;
+    padding: 7px;
+}
+
+.container .body-content .highlight-text {
+    color: #FF0000;
+    font-style: normal;
+}
+
+.container .body-content .example-code {
+    margin-top: 10px;
+    background-color: #CCCCCC;
+    color: #0000CC;
+    white-space: pre-wrap;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-style: normal;
+}

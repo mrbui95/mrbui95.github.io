@@ -1,0 +1,36 @@
+/* * {
+    padding: 0px;
+    margin: 0;
+    box-sizing: border-box;
+} */
+
+body, html {
+    height: 100%;
+}
+
+.container {
+    background-image: url('https://icdn.dantri.com.vn/cuNr3pVn1YVMKTM1eMWbRT8Qg7I9N/Image/2015/03/den12-48ef2.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+
+.container .title {
+    padding: 20px 0;
+    text-align: center;
+    color: #008888;
+}
+
+.container .body-content {
+    color: #339999;
+    margin: 20px 20px;
+    word-spacing: 2px;
+}
+
+.container .body-content-highlight {
+    background-color: #008888;
+    color: #ffffff;
+    font-weight: 700;
+    font-style: italic;
+}

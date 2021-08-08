@@ -1,0 +1,58 @@
+.container .title {
+    color: red;
+    text-transform: uppercase;
+    border: 5px solid red;
+    border-style: double;
+    padding: 10px;
+    text-align: center;
+}
+
+.container .body-content .body-paragraph {
+    padding: 10px;
+}
+
+.container .body-content .body-paragraph::first-letter {
+    color: red;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.container .body-content .body-paragraph-left {
+    text-align: left;
+}
+
+.container .body-content .body-paragraph-right {
+    text-align: right;
+}
+
+.container .body-content .body-paragraph .body-bold {
+    font-weight: 700;
+}
+
+.container .body-content .body-paragraph .body-underline {
+    text-decoration: underline;
+}
+
+.container .body-content .body-paragraph .body-italic {
+    font-style: italic;
+}
+
+.container .body-content .body-paragraph .body-mark {
+    background-color: yellow;
+    color: black;
+}
+
+.container .body-content .body-paragraph .body-red {
+    color: red;
+}
+
+
+.container .body-content .body-separator {
+    background-color: sandybrown;
+    text-align: right;
+    font-weight: 800px;
+    color: white;
+}
+
+

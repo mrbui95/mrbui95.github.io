@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo form và các điều khiển trên form</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="title">Đăng nhập</h2>
+        <div class="body-content">
+            <div class="table-container">
+                <table class="login-form">
+                    <tr class="table-row">
+                        <td class="table-row-data"><label for="user-code-input">Mã người dùng:</label></td>
+                        <td class="table-row-data">
+                            <input id="user-code-input" class="input" type="text">
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data"><label for="password-input">Mật khẩu:</label></td>
+                        <td class="table-row-data">
+                            <input id="password-input" class="input" type="password">
+                        </td>
+                    </tr>
+                    <tr class="table-row">
+                        <td class="table-row-data" colspan="2">
+                            <button class="login-button" onclick="
+                                const str = getElementById('user-code-input').value;
+                                getElementById('user-code').style.display = str ? 'table-row' : 'none';
+                                getElementById('user-code-info').innerHTML = str;"
+                            >Đăng nhập</button>
+                        </td>
+                    </tr>
+                    <tr id="user-code" class="table-row user-code">
+                        <td class="table-row-data" colspan="2">
+                            <div id="user-code-info" class="user-code-info"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const onLogin = function () {
+        console.log('==============')
+
+        getElementById('user-code').style.display = 'table-row';
+        getElementById('user-code-info').innerText = getElementById('user-code-input').innerText;
+    }
+</script>
+
+</html>

@@ -1,0 +1,43 @@
+.container .title {
+    color: red;
+    text-align: center;
+}
+
+.container .body-content .body-image {
+    float: left;
+    width: 30%;
+}
+
+.container .body-content .body-text-content {
+    float: left;
+}
+
+.container .body-content .body-text-content .content-info {
+    list-style-type: decimal;
+}
+
+.container .body-content .body-text-content .content-info .content-title{
+    background-color: red;
+    color: white;
+    display: inline;
+}
+
+.container .body-content .body-text-content .content-info .list-square {
+    list-style-type: square;
+}
+
+.container .body-content .body-text-content .content-info .list-circle {
+    list-style-type: circle;
+}
+
+.container .body-content .body-text-content .copyright {
+    padding-left: 23px;
+}
+
+.container .body-content .body-text-content .copyright .bold {
+    font-weight: 800;
+}
+
+.container .body-content .body-text-content .copyright .blue {
+    color: blue;
+}

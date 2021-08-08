@@ -1,0 +1,43 @@
+.container .title {
+    color: #006600 ;
+    text-align: center;
+}
+
+.container .sub-title {
+    color: #0000FF;
+    text-decoration: underline;
+}
+
+.container .description {
+    font-weight: 800;
+}
+
+.container .poem-title {
+    text-align: center;
+    color: #FF3399;
+    font-weight: 600;
+    background-color: #FECFFD;
+    margin: 15px 0;
+}
+
+.container .poem-body {
+    background-color: #FFFFCC;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.container .poem-body .p-break {
+    width: 200px;
+}
+
+.container .poem-body .first-paragraph .sentence {
+    color: red;
+}
+
+.container .poem-body .second-paragraph .sentence {
+    color: green;
+}
+
+.container .poem-body .third-paragraph .sentence {
+    color: blue;
+}

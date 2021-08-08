@@ -1,0 +1,51 @@
+.container .title {
+    color: #ffb92d;
+    text-align: center;
+}
+
+.container .body-content .img-container {
+    float: left;
+    width: 30%;
+}
+
+.container .body-content .img-container .img-description {
+    width: 100%;
+}
+
+
+.container .body-content .table-container {
+    float: left;
+    margin-left: 50px;
+}
+
+.container .body-content .table-container table, tr, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.container .body-content .table-container .table-list-foods th:first-child,
+.container .body-content .table-container .table-list-foods td:first-child {
+    width: 100px;
+    text-align: center;
+}
+
+.container .body-content .table-container .table-list-foods th:nth-child(2),
+.container .body-content .table-container .table-list-foods td:nth-child(2) {
+    width: 300px;
+}
+
+.container .body-content .table-container .table-list-foods .table-head-row {
+    background-color: #ce7500;
+    color: white;
+}
+
+/* .container .body-content .table-container .table-list-foods .table-highlight-row {
+    background-color: #FFEDCA;
+} */
+
+.container .body-content .table-container table tr:nth-child(2n+1) {
+    background-color: #FFEDCA;
+}
+
+
+

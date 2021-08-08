@@ -1,0 +1,38 @@
+.container .title {
+    color: #195701;
+    text-align: center;
+}
+
+.container .body-content .table-form-container table, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.container .body-content .table-form-container .register-form {
+    margin: auto;
+    background-color: lightgreen;
+    color: #195701;
+}
+
+.container .body-content .table-form-container .register-form .table-row td:first-child {
+    width: 250px;
+}
+
+.container .body-content .table-form-container .register-form .input {
+    margin-right: 20px;
+}
+
+.container .body-content .table-form-container .register-form .table-row .table-row-data .register-button {
+    margin: auto;
+    display: block;
+}
+
+.container .body-content .table-form-container .register-form #register-success-noti {
+    display: none;
+}
+
+.container .body-content .table-form-container .register-form .table-row .table-row-data .register-success-noti-content {
+    color: red;
+    text-align: center;
+}
+
