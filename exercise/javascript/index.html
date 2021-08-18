@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Exercise</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Exercise</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            </button>
+        </div>
+    </nav>
+
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <!-- Ex1 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Bài 0.
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình kiểm tra n có phải là số nguyên tố hay không?</p>
+                    <div class="solution">
+                        <label for="ex-1-input-1">Số cần kiểm tra</label>
+                        <input type="text" id="ex-1-input-1">
+                        <button onclick="ex1()">Kiểm tra</button>
+                        <hr>
+                        <div id="ex1-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex1 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex2 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-2" aria-expanded="false" aria-controls="flush-collapse-2">
+                    Bài 1.
+                </button>
+            </h2>
+            <div id="flush-collapse-2" class="accordion-collapse collapse" aria-labelledby="flush-heading-2"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình in ra các số từ 1 đến n</p>
+                    <div class="solution">
+                        <label for="ex2-input-1">Số n:</label>
+                        <input type="text" id="ex2-input-1">
+                        <button onclick="ex2()">Hiện danh sách</button>
+                        <hr>
+                        <div id="ex2-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex2 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex3 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-3" aria-expanded="false" aria-controls="flush-collapse-3">
+                    Bài 2.
+                </button>
+            </h2>
+            <div id="flush-collapse-3" class="accordion-collapse collapse" aria-labelledby="flush-heading-3"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình in ra các số lẻ từ 1 đến n</p>
+                    <div class="solution">
+                        <label for="ex3-input-1">Số n:</label>
+                        <input type="text" id="ex3-input-1">
+                        <button onclick="ex3()">Hiện danh sách</button>
+                        <hr>
+                        <div id="ex3-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex3 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex4 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-4" aria-expanded="false" aria-controls="flush-collapse-4">
+                    Bài 3.
+                </button>
+            </h2>
+            <div id="flush-collapse-4" class="accordion-collapse collapse" aria-labelledby="flush-heading-4"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình in ra các số chẵn từ 1 đến n</p>
+                    <div class="solution">
+                        <label for="ex4-input-1">Số n:</label>
+                        <input type="text" id="ex4-input-1">
+                        <button onclick="ex4()">Hiện danh sách</button>
+                        <hr>
+                        <div id="ex4-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex4 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex5 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-5" aria-expanded="false" aria-controls="flush-collapse-5">
+                    Bài 4.
+                </button>
+            </h2>
+            <div id="flush-collapse-5" class="accordion-collapse collapse" aria-labelledby="flush-heading-5"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình in ra các số là nguyên tố trong khoảng 1 đến n</p>
+                    <div class="solution">
+                        <label for="ex5-input-1">Số n:</label>
+                        <input type="text" id="ex5-input-1">
+                        <button onclick="ex5()">Hiện danh sách</button>
+                        <hr>
+                        <div id="ex5-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex5 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex6 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-6" aria-expanded="false" aria-controls="flush-collapse-6">
+                    Bài 5.
+                </button>
+            </h2>
+            <div id="flush-collapse-6" class="accordion-collapse collapse" aria-labelledby="flush-heading-6"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình tính tổng từ 1 đến n</p>
+                    <div class="solution">
+                        <label for="ex6-input-1">Số n:</label>
+                        <input type="text" id="ex6-input-1">
+                        <button onclick="ex6()">Tính</button>
+                        <hr>
+                        <div id="ex6-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex6 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex7 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-7" aria-expanded="false" aria-controls="flush-collapse-7">
+                    Bài 6.
+                </button>
+            </h2>
+            <div id="flush-collapse-7" class="accordion-collapse collapse" aria-labelledby="flush-heading-7"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình tính tổng bình phương của các số từ 1 đến n</p>
+                    <div class="solution">
+                        <label for="ex7-input-1">Số n:</label>
+                        <input type="text" id="ex7-input-1">
+                        <button onclick="ex7()">Tính</button>
+                        <hr>
+                        <div id="ex7-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex7 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex8 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-8" aria-expanded="false" aria-controls="flush-collapse-8">
+                    Bài 7.
+                </button>
+            </h2>
+            <div id="flush-collapse-8" class="accordion-collapse collapse" aria-labelledby="flush-heading-8"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Tính tổng các số lẻ trong khoảng 1 đến n</p>
+                    <div class="solution">
+                        <label for="ex8-input-1">Số n:</label>
+                        <input type="text" id="ex8-input-1">
+                        <button onclick="ex8()">Tính</button>
+                        <hr>
+                        <div id="ex8-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex8 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex9 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-9" aria-expanded="false" aria-controls="flush-collapse-9">
+                    Bài 8.
+                </button>
+            </h2>
+            <div id="flush-collapse-9" class="accordion-collapse collapse" aria-labelledby="flush-heading-9"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Kiểm tra số n có toàn số lẻ tạo thành hay không</p>
+                    <div class="solution">
+                        <label for="ex9-input-1">Số n:</label>
+                        <input type="text" id="ex9-input-1">
+                        <button onclick="ex9()">Tính</button>
+                        <hr>
+                        <div id="ex9-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex9 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex10 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-10" aria-expanded="false" aria-controls="flush-collapse-10">
+                    Bài 9.
+                </button>
+            </h2>
+            <div id="flush-collapse-10" class="accordion-collapse collapse" aria-labelledby="flush-heading-10"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Kiểm tra n có phải là số đối xứng</p>
+                    <div class="solution">
+                        <label for="ex10-input-1">Số n:</label>
+                        <input type="text" id="ex10-input-1">
+                        <button onclick="ex10()">Tính</button>
+                        <hr>
+                        <div id="ex10-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex10 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex11 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-11" aria-expanded="false" aria-controls="flush-collapse-11">
+                    Bài 10.
+                </button>
+            </h2>
+            <div id="flush-collapse-11" class="accordion-collapse collapse" aria-labelledby="flush-heading-11"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>In bảng cửu chương ra màn hình</p>
+                    <div class="solution">
+                        <!-- <label for="ex10-input-1">Số n:</label>
+                        <input type="text" id="ex10-input-1"> -->
+                        <button onclick="ex11()">Hiển thị</button>
+                        <hr>
+                        <div class="ex11-result" id="ex11-result-1"></div>
+                        <div class="ex11-result" id="ex11-result-2"></div>
+                        <div class="ex11-result" id="ex11-result-3"></div>
+                        <div class="ex11-result" id="ex11-result-4"></div>
+                        <div class="ex11-result" id="ex11-result-5"></div>
+                        <div class="ex11-result" id="ex11-result-6"></div>
+                        <div class="ex11-result" id="ex11-result-7"></div>
+                        <div class="ex11-result" id="ex11-result-8"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex11 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex12 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-12" aria-expanded="false" aria-controls="flush-collapse-12">
+                    Bài 11.
+                </button>
+            </h2>
+            <div id="flush-collapse-12" class="accordion-collapse collapse" aria-labelledby="flush-heading-12"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Đếm có bao nhiêu khoảng trắng trong một chuỗi</p>
+                    <div class="solution">
+                        <label for="ex12-input-1">Chuỗi:</label>
+                        <textarea id="ex12-input-1" name="ex12-input-1" rows="4"
+                            cols="50">UBND quận Đống Đa (Hà Nội) vừa có các quyết định thiết lập khu vực cách ly y tế trên địa bàn 5 phường</textarea>
+                        <!-- <input type="text" id="ex12-input-1"> -->
+                        <button onclick="ex12()">Đếm</button>
+                        <hr>
+                        <div id="ex12-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex12 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex13 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-13">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-13" aria-expanded="false" aria-controls="flush-collapse-13">
+                    Bài 12.
+                </button>
+            </h2>
+            <div id="flush-collapse-13" class="accordion-collapse collapse" aria-labelledby="flush-heading-13"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Hãy remove tất cả khoảng trắng, space và ‘enter’ trong một chuỗi</p>
+                    <div class="solution">
+                        <label for="ex13-input-1">Chuỗi:</label>
+                        <textarea id="ex13-input-1" name="ex13-input-1" rows="4"
+                            cols="50">UBND quận Đống Đa (Hà Nội) vừa có các quyết định thiết lập khu vực cách ly y tế trên địa bàn 5 phường: Văn Chương, Hàng Bột, Thổ Quan, Khâm Thiên và Văn Miếu.
+Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly y tế đối với 5 phường nêu trên để đảm bảo yêu cầu cấp bách trong công tác phòng, chống dịch Covid-19 trên địa bàn quận Đống Đa.</textarea>
+                        <!-- <input type="text" id="ex12-input-1"> -->
+                        <button onclick="ex13()">Remove</button>
+                        <hr>
+                        <div id="ex13-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex13 -->
+
+        <!-- ---------------------------------------- -->
+
+
+        <!-- Ex14 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-14">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-14" aria-expanded="false" aria-controls="flush-collapse-14">
+                    Bài 13.
+                </button>
+            </h2>
+            <div id="flush-collapse-14" class="accordion-collapse collapse" aria-labelledby="flush-heading-14"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Hãy remove tất cả khoảng trắng, space và ‘enter’ trong một chuỗi</p>
+                    <div class="solution">
+                        <label for="ex14-input-1">Chuỗi:</label>
+                        <textarea id="ex14-input-1" name="ex14-input-1" rows="4"
+                            cols="50">UBND quận Đống Đa (Hà Nội) vừa có các quyết định thiết lập khu vực cách ly y tế trên địa bàn 5 phường: Văn Chương, Hàng Bột, Thổ Quan, Khâm Thiên và Văn Miếu.
+        Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly y tế đối với 5 phường nêu trên để đảm bảo yêu cầu cấp bách trong công tác phòng, chống dịch Covid-19 trên địa bàn quận Đống Đa.</textarea>
+                        <!-- <input type="text" id="ex12-input-1"> -->
+                        <button onclick="ex14()">Reverse</button>
+                        <hr>
+                        <div id="ex14-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex14 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex15 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-15">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-15" aria-expanded="false" aria-controls="flush-collapse-15">
+                    Bài 14.
+                </button>
+            </h2>
+            <div id="flush-collapse-15" class="accordion-collapse collapse" aria-labelledby="flush-heading-15"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Hãy remove tất cả khoảng trắng, space và ‘enter’ trong một chuỗi</p>
+                    <div class="solution">
+                        <label for="ex15-input-1">Chuỗi:</label>
+                        <textarea id="ex15-input-1" name="ex15-input-1" rows="4"
+                            cols="50">UBND quận Đống Đa (Hà Nội) vừa có các quyết định thiết lập khu vực cách ly y tế trên địa bàn 5 phường: Văn Chương, Hàng Bột, Thổ Quan, Khâm Thiên và Văn Miếu.
+                Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly y tế đối với 5 phường nêu trên để đảm bảo yêu cầu cấp bách trong công tác phòng, chống dịch Covid-19 trên địa bàn quận Đống Đa.</textarea>
+                        <br>
+                        <label for="ex15-input-2">Chuỗi cần tìm:</label>
+                        <input type="text" id="ex15-input-2">
+                        <button onclick="ex15()">Tìm</button>
+                        <hr>
+                        <div id="ex15-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex15 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex16 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-16">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-16" aria-expanded="false" aria-controls="flush-collapse-16">
+                    Bài 15.
+                </button>
+            </h2>
+            <div id="flush-collapse-16" class="accordion-collapse collapse" aria-labelledby="flush-heading-16"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết chương trình lấy id name của fb.</p>
+                    <div class="solution">
+                        <label for="ex16-input-1">Link Facebook:</label>
+                        <input type="text" id="ex16-input-1">
+                        <button onclick="ex16()">Xác định</button>
+                        <hr>
+                        <div id="ex16-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex16 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex17 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-17">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-17" aria-expanded="false" aria-controls="flush-collapse-17">
+                    Bài 16.
+                </button>
+            </h2>
+            <div id="flush-collapse-17" class="accordion-collapse collapse" aria-labelledby="flush-heading-17"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết hàm số tính min, max của 3 số</p>
+                    <div class="solution">
+                        <label for="ex17-input-1">Dãy số (các số cách nhau bởi dấu phảy):</label>
+                        <input type="text" id="ex17-input-1">
+                        <button onclick="ex17()">Xác định</button>
+                        <hr>
+                        <div id="ex17-result-1"></div>
+                        <div id="ex17-result-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex17 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex19 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-19">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-19" aria-expanded="false" aria-controls="flush-collapse-19">
+                    Bài 18.
+                </button>
+            </h2>
+            <div id="flush-collapse-19" class="accordion-collapse collapse" aria-labelledby="flush-heading-19"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Hãy tính tổng các số từ 1 đến n mà không dùng for, while loop?</p>
+                    <div class="solution">
+                        <label for="ex19-input-1">Số n:</label>
+                        <input type="text" id="ex19-input-1">
+                        <button onclick="ex19()">Xác định</button>
+                        <hr>
+                        <div id="ex19-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex19 -->
+
+        <!-- ---------------------------------------- -->
+
+
+        <!-- Link code -->
+        <div class="link-code-info">
+            <a href="./js/index.js" class="link-code">Xem code tại đây</a>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="./js/index.js"></script>
+
+    <!-- boostrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
