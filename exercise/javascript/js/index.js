@@ -1,5 +1,6 @@
 const ALERT_UNSIGNINT_NUMBER = 'Bạn cần nhập 1 số nguyên dương'
 const ALERT_WRONG_FORMAT = 'Bạn đã nhập sai định dạng'
+const ALERT_ONE_WORD_FORMAT = 'Bạn cần nhập 1 từ'
 
 const checkValidateNumber = (number) => {
     let isShow
@@ -20,6 +21,10 @@ const checkValidateNonNegativeNumber = (number) => {
     }
     return false
 }
+
+const removeExtraSpace = input => input.replace(/\s+/g, ' ')
+
+const capitalizeFirstLetter = input => input.charAt(0).toUpperCase() + input.slice(1).toLowerCase()
 
 const ex1 = () => {
     const start = Date.now()
@@ -336,16 +341,40 @@ const ex15 = () => {
     const input1 = document.getElementById('ex15-input-1').value
     const input2 = document.getElementById('ex15-input-2').value
 
-    const result = input1.indexOf(input2)
+    if (input2.includes(' ')) {
+        alert(ALERT_ONE_WORD_FORMAT)
+    } else {
+        let inputFormated = removeExtraSpace(input1.replace(/[,!.";()]/g, ' '))
+        const listWord = inputFormated.split(' ')
+        console.log(listWord)
+        const result = listWord.indexOf(input2) + 1
 
-    document.getElementById('ex15-result-1').innerHTML = `Vị trí của chuỗi "${input2}" là: ${result}`
+        if (result > 0) {
+            document.getElementById('ex15-result-1').innerHTML = `Vị trí của chuỗi "${input2}" là: ${result}`
+        } else {
+            document.getElementById('ex15-result-1').innerHTML = `Không tìm thấy chuỗi "${input2}"!`
+        }
+    }
 
     console.log('Ex15 execute time: ', (Date.now() - start))
 }
 
 const ex16 = () => {
     const start = Date.now()
-    const input = document.getElementById('ex16-input-1').value
+    const input1 = document.getElementById('ex16-input-1').value
+
+    let listWord = input1.split(' ')
+    listWord = listWord.map(word => capitalizeFirstLetter(word))
+    const result = listWord.join(' ')
+    
+    document.getElementById('ex16-result-1').innerHTML = `Họ tên sau khi chuẩn hoá: ${result}`
+
+    console.log('Ex16 execute time: ', (Date.now() - start))
+}
+
+const ex17 = () => {
+    const start = Date.now()
+    const input = document.getElementById('ex17-input-1').value
 
     const facebookPrefix = 'https://www.facebook.com/'
 
@@ -355,17 +384,17 @@ const ex16 = () => {
     }
 
     if (result) {
-        document.getElementById('ex16-result-1').innerHTML = `Facebook Id Name là: ${result}`
+        document.getElementById('ex17-result-1').innerHTML = `Facebook Id Name là: ${result}`
     } else {
-        document.getElementById('ex16-result-1').innerHTML = `Không xác định được Facebook Id Name`
+        document.getElementById('ex17-result-1').innerHTML = `Không xác định được Facebook Id Name`
     }
 
-    console.log('Ex15 execute time: ', (Date.now() - start))
+    console.log('Ex17 execute time: ', (Date.now() - start))
 }
 
-const ex17 = () => {
+const ex18 = () => {
     const start = Date.now()
-    const input = document.getElementById('ex17-input-1').value
+    const input = document.getElementById('ex18-input-1').value
 
     const listNumber = input.split(',').map((n) => {
         let number = Number(n.trim())
@@ -389,30 +418,41 @@ const ex17 = () => {
             }
         }
 
-        document.getElementById('ex17-result-1').innerHTML = `Số nhỏ nhất trong dãy là ${min}`
-        document.getElementById('ex17-result-2').innerHTML = `Số lớn nhất trong dãy là ${max}`
+        document.getElementById('ex18-result-1').innerHTML = `Số nhỏ nhất trong dãy là ${min}`
+        document.getElementById('ex18-result-2').innerHTML = `Số lớn nhất trong dãy là ${max}`
     } else {
         alert(ALERT_WRONG_FORMAT)
     }
 
-    console.log('Ex17 execute time: ', (Date.now() - start))
-}
-
-const ex18 = () => {
-    const start = Date.now()
-    const input1 = document.getElementById('ex15-input-1').value
-    const input2 = document.getElementById('ex15-input-2').value
-
-    const result = input1.lastIndexOf(input2)
-
-    document.getElementById('ex15-result-1').innerHTML = `Vị trí của chuỗi "${input2}" là: ${result}`
-
-    console.log('Ex15 execute time: ', (Date.now() - start))
+    console.log('Ex18 execute time: ', (Date.now() - start))
 }
 
 const ex19 = () => {
     const start = Date.now()
-    const input = document.getElementById('ex19-input-1').value
+    const input1 = document.getElementById('ex19-input-1').value
+    const input2 = document.getElementById('ex19-input-2').value
+
+    if (input2.includes(' ')) {
+        alert(ALERT_ONE_WORD_FORMAT)
+    } else {
+        let inputFormated = removeExtraSpace(input1.replace(/[,!.";()]/g, ' '))
+        const listWord = inputFormated.split(' ')
+        console.log(listWord)
+        const result = listWord.lastIndexOf(input2) + 1
+
+        if (result > 0) {
+            document.getElementById('ex19-result-1').innerHTML = `Vị trí của chuỗi "${input2}" là: ${result}`
+        } else {
+            document.getElementById('ex19-result-1').innerHTML = `Không tìm thấy chuỗi "${input2}"!`
+        }
+    }
+
+    console.log('Ex19 execute time: ', (Date.now() - start))
+}
+
+const ex20 = () => {
+    const start = Date.now()
+    const input = document.getElementById('ex20-input-1').value
     const number = Number(input)
 
     const sumRecusion = (number) => {
@@ -423,10 +463,41 @@ const ex19 = () => {
     if (checkValidateNumber(number) && checkValidateNonNegativeNumber(number)) {
         const result = sumRecusion(number)
 
-        document.getElementById('ex19-result-1').innerHTML = `Hãy tính tổng các số từ 1 đến ${number} là: ${result}`
+        document.getElementById('ex20-result-1').innerHTML = `Hãy tính tổng các số từ 1 đến ${number} là: ${result}`
     } else {
         alert(ALERT_UNSIGNINT_NUMBER)
     }
 
-    console.log('Ex19 execute time: ', (Date.now() - start))
+    console.log('Ex20 execute time: ', (Date.now() - start))
+}
+
+const ex21 = () => {
+    const start = Date.now()
+    const input = document.getElementById('ex21-input-1').value
+
+    const noExtraSpaceInput = removeExtraSpace(input)
+    let keyValueList = noExtraSpaceInput.split('"')
+    console.log(keyValueList)
+    keyValueList = keyValueList.map((keyValue, index) => {
+        if (index > 0) {
+            if (index % 2 === 1) {
+                let valueStr = keyValue
+                if (valueStr.startsWith(' ')) {
+                    valueStr = valueStr.substring(1)
+                }
+                if(valueStr.endsWith(' ')) {
+                    valueStr = valueStr.substring(0, valueStr.length - 1)
+                }
+                return valueStr
+            }
+        }
+        return keyValue
+    })
+    console.log(keyValueList)
+
+    const result = keyValueList.join('"')
+
+    document.getElementById('ex21-result-1').innerHTML = `Chuỗi sau khi chuẩn hoá là: ${result}`
+
+    console.log('Ex21 execute time: ', (Date.now() - start))
 }

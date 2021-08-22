@@ -15,10 +15,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Exercise</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-            </button>
         </div>
     </nav>
 
@@ -36,8 +32,8 @@
                 <div class="accordion-body">
                     <p>Viết chương trình kiểm tra n có phải là số nguyên tố hay không?</p>
                     <div class="solution">
-                        <label for="ex-1-input-1">Số cần kiểm tra</label>
-                        <input type="text" id="ex-1-input-1">
+                        <label for="ex1-input-1">Số cần kiểm tra</label>
+                        <input type="text" id="ex1-input-1">
                         <button onclick="ex1()">Kiểm tra</button>
                         <hr>
                         <div id="ex1-result-1"></div>
@@ -414,7 +410,7 @@ Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly
             <div id="flush-collapse-15" class="accordion-collapse collapse" aria-labelledby="flush-heading-15"
                 data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <p>Hãy remove tất cả khoảng trắng, space và ‘enter’ trong một chuỗi</p>
+                    <p>Nhập vào chuỗi s1 và s2, cho biết vị trí xuất hiện của chuỗi s2 trong s1</p>
                     <div class="solution">
                         <label for="ex15-input-1">Chuỗi:</label>
                         <textarea id="ex15-input-1" name="ex15-input-1" rows="4"
@@ -422,7 +418,7 @@ Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly
                 Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly y tế đối với 5 phường nêu trên để đảm bảo yêu cầu cấp bách trong công tác phòng, chống dịch Covid-19 trên địa bàn quận Đống Đa.</textarea>
                         <br>
                         <label for="ex15-input-2">Chuỗi cần tìm:</label>
-                        <input type="text" id="ex15-input-2">
+                        <input type="text" id="ex15-input-2" value="Hà">
                         <button onclick="ex15()">Tìm</button>
                         <hr>
                         <div id="ex15-result-1"></div>
@@ -445,11 +441,11 @@ Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly
             <div id="flush-collapse-16" class="accordion-collapse collapse" aria-labelledby="flush-heading-16"
                 data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <p>Viết chương trình lấy id name của fb.</p>
+                    <p>Viết chương trình chuẩn hóa họ tên.</p>
                     <div class="solution">
-                        <label for="ex16-input-1">Link Facebook:</label>
-                        <input type="text" id="ex16-input-1">
-                        <button onclick="ex16()">Xác định</button>
+                        <label for="ex16-input-1">Chuỗi:</label>
+                        <input type="text" id="ex16-input-1" value="NguyeN THI tho tHu hA">
+                        <button onclick="ex16()">Tìm</button>
                         <hr>
                         <div id="ex16-result-1"></div>
                     </div>
@@ -471,19 +467,45 @@ Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly
             <div id="flush-collapse-17" class="accordion-collapse collapse" aria-labelledby="flush-heading-17"
                 data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <p>Viết hàm số tính min, max của 3 số</p>
+                    <p>Viết chương trình lấy id name của fb.</p>
                     <div class="solution">
-                        <label for="ex17-input-1">Dãy số (các số cách nhau bởi dấu phảy):</label>
-                        <input type="text" id="ex17-input-1">
+                        <label for="ex17-input-1">Link Facebook:</label>
+                        <input type="text" id="ex17-input-1" value="https://www.facebook.com/ngothucdat">
                         <button onclick="ex17()">Xác định</button>
                         <hr>
                         <div id="ex17-result-1"></div>
-                        <div id="ex17-result-2"></div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Het ex17 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex18 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-18">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-18" aria-expanded="false" aria-controls="flush-collapse-18">
+                    Bài 17.
+                </button>
+            </h2>
+            <div id="flush-collapse-18" class="accordion-collapse collapse" aria-labelledby="flush-heading-18"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết hàm số tính min, max của 3 số</p>
+                    <div class="solution">
+                        <label for="ex18-input-1">Dãy số (các số cách nhau bởi dấu phảy):</label>
+                        <input type="text" id="ex18-input-1">
+                        <button onclick="ex18()">Xác định</button>
+                        <hr>
+                        <div id="ex18-result-1"></div>
+                        <div id="ex18-result-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex18 -->
 
         <!-- ---------------------------------------- -->
 
@@ -498,11 +520,16 @@ Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly
             <div id="flush-collapse-19" class="accordion-collapse collapse" aria-labelledby="flush-heading-19"
                 data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    <p>Hãy tính tổng các số từ 1 đến n mà không dùng for, while loop?</p>
+                    <p>Viết hàm tìm vị trí xâu X tồn tại kề cuối trong xâu Y</p>
                     <div class="solution">
-                        <label for="ex19-input-1">Số n:</label>
-                        <input type="text" id="ex19-input-1">
-                        <button onclick="ex19()">Xác định</button>
+                        <label for="ex19-input-1">Chuỗi:</label>
+                        <textarea id="ex19-input-1" name="ex15-input-1" rows="4"
+                            cols="50">UBND quận Đống Đa (Hà Nội) vừa có các quyết định thiết lập khu vực cách ly y tế trên địa bàn 5 phường: Văn Chương, Hàng Bột, Thổ Quan, Khâm Thiên và Văn Miếu.
+                        Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly y tế đối với 5 phường nêu trên để đảm bảo yêu cầu cấp bách trong công tác phòng, chống dịch Covid-19 trên địa bàn quận Đống Đa.</textarea>
+                        <br>
+                        <label for="ex19-input-2">Chuỗi cần tìm:</label>
+                        <input type="text" id="ex19-input-2" value="phường">
+                        <button onclick="ex19()">Tìm</button>
                         <hr>
                         <div id="ex19-result-1"></div>
                     </div>
@@ -510,6 +537,59 @@ Theo nội dung thông cáo phát đi, việc ban hành quyết định cách ly
             </div>
         </div>
         <!-- Het ex19 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex20 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-20">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-20" aria-expanded="false" aria-controls="flush-collapse-20">
+                    Bài 19.
+                </button>
+            </h2>
+            <div id="flush-collapse-20" class="accordion-collapse collapse" aria-labelledby="flush-heading-20"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Hãy tính tổng các số từ 1 đến n mà không dùng for, while loop?</p>
+                    <div class="solution">
+                        <label for="ex20-input-1">Số n:</label>
+                        <input type="text" id="ex20-input-1">
+                        <button onclick="ex20()">Xác định</button>
+                        <hr>
+                        <div id="ex20-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex20 -->
+
+        <!-- ---------------------------------------- -->
+
+        <!-- Ex21 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-21">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse-21" aria-expanded="false" aria-controls="flush-collapse-21">
+                    Bài 20.
+                </button>
+            </h2>
+            <div id="flush-collapse-21" class="accordion-collapse collapse" aria-labelledby="flush-heading-21"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <p>Viết 1 hàm chuẩn hóa so sánh của một string, và trả về Xâu chuẩn. Xâu chuẩn là sâu không tồn tại
+                        các dấu cách(space) và tab and enter trong value(value là giá trị trong "{value}")</p>
+                    <div class="solution">
+                        <label for="ex21-input-1">Chuỗi:</label>
+                        <input type="text" id="ex21-input-1" value="computer =            &quot; ngan 98    &quot; AND class = &quot;  REACTJS2002 &quot;">
+                        <button onclick="ex21()">Xác định</button>
+                        <hr>
+                        <div id="ex21-result-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Het ex21 -->
 
         <!-- ---------------------------------------- -->
 
