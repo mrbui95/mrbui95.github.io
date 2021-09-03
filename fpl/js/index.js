@@ -117,7 +117,7 @@ const getListClassicMemberId = (leagueId, gameweek) => {
 
             const urlInfo = `https://fantasy.premierleague.com/api/entry/${entryId}/event/${gameweek}/picks/`
 
-            getInfo(urlInfo, null, (data) => {
+            await getInfo(urlInfo, null, (data) => {
                 const newMember = {
                     ...member,
                 }
