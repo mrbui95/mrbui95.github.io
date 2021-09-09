@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -20,7 +21,12 @@
         </select>
     </div>
 
-    <table class="table">
+    <div class="text-center js-spinner">
+        <div class="spinner-border" role="status"></div>
+        <div class="js-spinner-loading-text">0%</div>
+    </div>
+
+    <table class="table js-table-list-member">
         <thead>
             <tr>
                 <th scope="col">#</th>
