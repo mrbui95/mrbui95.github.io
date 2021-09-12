@@ -1,5 +1,7 @@
 const LEAGUE_CLASSIC_ID = '290179'
 
+localStorage.clear()
+
 const getInfo = async (url, params, callback, errorCallBack) => {
     try {
         const result = await fetch(url, {
