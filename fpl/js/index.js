@@ -1,4 +1,4 @@
-const LEAGUE_CLASSIC_ID = '290179'
+const LEAGUE_CLASSIC_ID = '13084'
 
 localStorage.clear()
 
@@ -13,6 +13,7 @@ const getInfo = async (url, params, callback, errorCallBack) => {
         })
             .then(response => response.json())
             .then(json => callback(json, params))
+
     } catch (err) {
         console.log(err)
         errorCallBack()
