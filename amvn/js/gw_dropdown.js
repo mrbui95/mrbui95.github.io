@@ -1,6 +1,20 @@
 const gameWeekSelect = document.querySelector('#gw_select')
 
-let currentGw = 8
+
+currentGw = 1
+
+const getCurrentGW =  async () => {
+    fetch("http://example.com/movies.json", {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+        }
+    }).then(data => console.log(data.json()))
+}
+
+
+
 
 for (let i = 1; i < 39; i += 1) {
     const option = document.createElement('option')
@@ -18,3 +32,10 @@ const gameWeekSelectOnChange = (e) => {
 }
 
 gameWeekSelect.onchange = gameWeekSelectOnChange
+
+const reloadPage = () => {
+    console.log('reload page')
+    getCurrentGW()
+}
+
+getCurrentGW()
