@@ -4,7 +4,7 @@ const gameWeekSelect = document.querySelector('#gw_select')
 currentGw = 1
 
 const getCurrentGW =  async () => {
-    fetch("http://example.com/movies.json", {
+    fetch("https://mrbui95.github.io/fpl/data/current_gw.json", {
         method: "GET",
         headers: {
             "Content-type": "application/json;charset=UTF-8",
