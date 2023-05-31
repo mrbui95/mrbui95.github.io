@@ -33,7 +33,6 @@ const getCurrentGW =  async () => {
 getCurrentGW()
 
 
-
 for (let i = 1; i < 39; i += 1) {
     const option = document.createElement('option')
     option.appendChild(document.createTextNode(i))
@@ -45,13 +44,46 @@ for (let i = 1; i < 39; i += 1) {
     gameWeekSelect.appendChild(option)
 }
 
+
+const getUserData = () => {
+    console.log('==========GET USER DATA============')
+
+    let gw = currentGw % 19
+    if (gw < 8) {
+        fetch("https://mrbui95.github.io/fpl/data/c1/group_1.json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then(data => {
+            return data.json()
+        }).then((groupData) => {
+            console.log(groupData)
+            for (let i = 1; i <=4; i++) {
+                const fixture = groupData[i]
+                console.log(fixture[gw])
+            }
+        })
+    } else {
+        console.log(gw, 'GW > 8')
+    }
+
+
+    
+}
+
+getUserData()
+
 const gameWeekSelectOnChange = (e) => {
     currentGw = e.target.value
     reloadPage()
 }
 
+
 gameWeekSelect.onchange = gameWeekSelectOnChange
 
 const reloadPage = () => {
     console.log('reload page')
+    getUserData()
 }
