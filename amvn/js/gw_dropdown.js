@@ -57,6 +57,14 @@ const getGroupName = (index) => {
             return 'Group C'
         case 4:
             return 'Group D'
+        case 5:
+            return 'Group E'
+        case 6:
+            return 'Group F'
+        case 7:
+            return 'Group G'
+        case 8:
+            return 'Group H'
         default:
             return 'Group'
     }
