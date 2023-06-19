@@ -208,6 +208,7 @@ const getUserData = async () => {
                 "Access-Control-Allow-Origin": "*"
             }
         }).then(data => {
+            console.log(data)
             return data.json()
         }).then((data) => {
             console.log(data)
@@ -254,7 +255,7 @@ const getUserData = async () => {
         }).then((groupData) => {
             console.log(groupData)
             for (let i = 1; i <= 8; i++) {
-                const fixture = groupData[i][gw]
+                const fixture = groupData[i][gw - 1]
                 console.log(fixture)
 
                 const groupName = getGroupName(i)
