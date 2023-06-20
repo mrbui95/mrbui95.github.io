@@ -208,10 +208,8 @@ const getUserData = async () => {
                 "Access-Control-Allow-Origin": "*"
             }
         }).then(data => {
-            console.log(data)
             return data.json()
         }).then((data) => {
-            console.log(data)
             let rank = []
             for (let i = 1; i <= 8; i++) {
                 const groupInfo = data[i]
