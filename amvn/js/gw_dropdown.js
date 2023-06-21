@@ -107,6 +107,12 @@ const createGroupResult = (groupInfo) => {
         td3.appendChild(document.createTextNode(match.point2))
         td4.appendChild(document.createTextNode(match.name2))
 
+        if (match.point1 > match.point2) {
+            td1.classList.add('winner_cell')
+        } else if (match.point1 < match.point2) {
+            td4.classList.add('winner_cell')
+        }
+
         tr.appendChild(td1)
         tr.appendChild(td2)
         tr.appendChild(td3)
@@ -278,8 +284,8 @@ const getUserData = async () => {
                     const player2 = gwData[team2]
                     const name1 = uInfo[team1]['name']
                     const name2 = uInfo[team2]['name']
-                    const point1 = player1['entry_history']['points']
-                    const point2 = player2['entry_history']['points']
+                    const point1 = player1['entry_history']['points'] - player1['entry_history']['event_transfers_cost']
+                    const point2 = player2['entry_history']['points'] - player2['entry_history']['event_transfers_cost']
 
                     listMatchResult = listMatchResult.concat({
                         team1,
