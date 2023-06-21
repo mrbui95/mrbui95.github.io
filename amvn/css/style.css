@@ -1,3 +1,19 @@
 .winner_cell {
-    background-image: linear-gradient(to right , rgb(0, 255, 135), rgb(2, 239, 255));
+    background-color: lightgreen;
+}
+
+.rank_c1 {
+    background-color: lightgreen;
+}
+
+.rank_c2 {
+    background-color: #eeeb90;
+}
+
+.rank_c3 {
+    background-color: #ffb16f;
+}
+
+.rank_c4 {
+    background-color: #ff9494;
 }

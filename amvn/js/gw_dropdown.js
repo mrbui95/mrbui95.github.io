@@ -135,20 +135,22 @@ const createGroupResult = (groupInfo) => {
 
     const head2 = document.createElement('thead')
     const trHead2 = document.createElement('tr')
-    
+
     const tdHead2_1 = document.createElement('td')
     const tdHead2_2 = document.createElement('td')
     const tdHead2_3 = document.createElement('td')
     const tdHead2_4 = document.createElement('td')
     const tdHead2_5 = document.createElement('td')
     const tdHead2_6 = document.createElement('td')
+    const tdHead2_7 = document.createElement('td')
 
-    tdHead2_1.appendChild(document.createTextNode('HLV'))
-    tdHead2_2.appendChild(document.createTextNode('T'))
-    tdHead2_3.appendChild(document.createTextNode('H'))
-    tdHead2_4.appendChild(document.createTextNode('B'))
-    tdHead2_5.appendChild(document.createTextNode('HS'))
-    tdHead2_6.appendChild(document.createTextNode('Đ'))
+    tdHead2_1.appendChild(document.createTextNode('Hạng'))
+    tdHead2_2.appendChild(document.createTextNode('HLV'))
+    tdHead2_3.appendChild(document.createTextNode('T'))
+    tdHead2_4.appendChild(document.createTextNode('H'))
+    tdHead2_5.appendChild(document.createTextNode('B'))
+    tdHead2_6.appendChild(document.createTextNode('HS'))
+    tdHead2_7.appendChild(document.createTextNode('Đ'))
 
     trHead2.appendChild(tdHead2_1)
     trHead2.appendChild(tdHead2_2)
@@ -156,9 +158,12 @@ const createGroupResult = (groupInfo) => {
     trHead2.appendChild(tdHead2_4)
     trHead2.appendChild(tdHead2_5)
     trHead2.appendChild(tdHead2_6)
+    trHead2.appendChild(tdHead2_7)
 
     head2.append(trHead2)
     table2.appendChild(head2)
+
+    let index = 1;
 
     groupInfo.rank.forEach((rank) => {
         const tr2 = document.createElement('tr')
@@ -168,13 +173,15 @@ const createGroupResult = (groupInfo) => {
         const td2_4 = document.createElement('td')
         const td2_5 = document.createElement('td')
         const td2_6 = document.createElement('td')
+        const td2_7 = document.createElement('td')
 
-        td2_1.appendChild(document.createTextNode(rank.name))
-        td2_2.appendChild(document.createTextNode(rank.win))
-        td2_3.appendChild(document.createTextNode(rank.draw))
-        td2_4.appendChild(document.createTextNode(rank.lose))
-        td2_5.appendChild(document.createTextNode(rank.gd))
-        td2_6.appendChild(document.createTextNode(rank.point))
+        td2_1.appendChild(document.createTextNode(index))
+        td2_2.appendChild(document.createTextNode(rank.name))
+        td2_3.appendChild(document.createTextNode(rank.win))
+        td2_4.appendChild(document.createTextNode(rank.draw))
+        td2_5.appendChild(document.createTextNode(rank.lose))
+        td2_6.appendChild(document.createTextNode(rank.gd))
+        td2_7.appendChild(document.createTextNode(rank.point))
 
         tr2.appendChild(td2_1)
         tr2.appendChild(td2_2)
@@ -182,8 +189,29 @@ const createGroupResult = (groupInfo) => {
         tr2.appendChild(td2_4)
         tr2.appendChild(td2_5)
         tr2.appendChild(td2_6)
+        tr2.appendChild(td2_7)
+
+        switch (index) {
+            case 1:
+            case 2:
+                tr2.classList.add('rank_c1')
+                break
+            case 3:
+            case 4:
+                tr2.classList.add('rank_c2')
+                break
+            case 5:
+            case 6:
+                tr2.classList.add('rank_c3')
+                break
+            case 7:
+            case 8:
+                tr2.classList.add('rank_c4')
+                break
+        }
 
         tbody2.appendChild(tr2)
+        index += 1
     })
 
     table2.appendChild(tbody2)
