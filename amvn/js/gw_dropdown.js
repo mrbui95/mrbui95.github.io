@@ -73,6 +73,11 @@ const getGroupName = (index) => {
 
 const groupResults = document.querySelector('#group_result')
 
+const clearGroupResult = () => {
+    // clear all elements
+    while (groupResults.firstChild) groupResults.removeChild(groupResults.firstChild);
+}
+
 const createGroupResult = (groupInfo) => {
     const result = document.createElement('div')
 
@@ -252,6 +257,9 @@ const getUserData = async () => {
             return data.json()
         }).then((groupData) => {
             console.log(groupData)
+
+            clearGroupResult()
+
             for (let i = 1; i <= 8; i++) {
                 const fixture = groupData[i][gw - 1]
                 console.log(fixture)
