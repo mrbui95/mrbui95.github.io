@@ -81,9 +81,19 @@ const clearGroupResult = () => {
 const createGroupResult = (groupInfo) => {
     const result = document.createElement('div')
 
-    result.appendChild(document.createTextNode(groupInfo.groupName))
+
+    // Tên Bảng
+    const groupNameEle = document.createElement('div')
+    groupNameEle.setAttribute('id', `group_${groupInfo.index}`)
+    groupNameEle.innerHTML = groupInfo.groupName
+    groupNameEle.style.fontWeight = 800
+    groupNameEle.style.padding = '10px 0'
+    result.appendChild(groupNameEle)
 
 
+
+
+    // Kết quả trận đấu vòng
     const table = document.createElement('table')
     table.classList.add('table')
     table.classList.add('table-bordered')
@@ -91,10 +101,7 @@ const createGroupResult = (groupInfo) => {
     table.classList.add('table-sm')
     const tbody = document.createElement('tbody')
 
-    console.log(groupInfo.listMatchResult)
-
     groupInfo.listMatchResult.forEach((match) => {
-        console.log(match)
 
         const tr = document.createElement('tr')
         const td1 = document.createElement('td')
@@ -102,16 +109,17 @@ const createGroupResult = (groupInfo) => {
         const td3 = document.createElement('td')
         const td4 = document.createElement('td')
 
-        td1.appendChild(document.createTextNode(match.name1))
-        td2.appendChild(document.createTextNode(match.point1))
-        td3.appendChild(document.createTextNode(match.point2))
-        td4.appendChild(document.createTextNode(match.name2))
-
+        
         if (match.point1 > match.point2) {
             td1.classList.add('winner_cell')
         } else if (match.point1 < match.point2) {
             td4.classList.add('winner_cell')
         }
+
+        td1.appendChild(document.createTextNode(match.name1))
+        td2.appendChild(document.createTextNode(match.point1))
+        td3.appendChild(document.createTextNode(match.point2))
+        td4.appendChild(document.createTextNode(match.name2))
 
         tr.appendChild(td1)
         tr.appendChild(td2)
@@ -122,6 +130,8 @@ const createGroupResult = (groupInfo) => {
     })
 
     table.appendChild(tbody)
+    table.style.border = 'solid 1px'
+
     result.appendChild(table)
 
     result.appendChild(document.createTextNode('BXH'))
@@ -215,6 +225,7 @@ const createGroupResult = (groupInfo) => {
     })
 
     table2.appendChild(tbody2)
+    table2.style.border = 'solid 1px'
     result.appendChild(table2)
 
 
@@ -329,6 +340,7 @@ const getUserData = async () => {
                 console.log(gwRank[i])
 
                 groupInfo = {
+                    index: i,
                     listMatchResult,
                     groupName,
                     rank: gwRank[i]
@@ -345,7 +357,7 @@ const getUserData = async () => {
         })
 
     } else {
-        console.log(gw, 'GW > 8')
+        console.log(gw, 'GW >= 8')
     }
 
 
