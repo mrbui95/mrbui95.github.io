@@ -271,14 +271,17 @@ const getUserData = async () => {
     let urlGroupFixture = ''
     let maxGroup = -1
     let groupType = ''
+    let fixtureIndex = 1
     if (gw < 8) {
         urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_1.json'
         maxGroup = 8
         groupType = 'PHAN_HANG'
+        fixtureIndex = gw - 1
     } else if (gw < 17) {
         urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_period2_1.json'
         maxGroup = 4
         groupType = 'C_1234'
+        fixtureIndex = gw -8
     }
 
 
@@ -337,7 +340,7 @@ const getUserData = async () => {
             clearGroupResult()
 
             for (let i = 1; i <= maxGroup; i++) {
-                const fixture = groupData[i][gw - 1]
+                const fixture = groupData[i][fixtureIndex]
                 console.log(fixture)
 
                 const groupName = getGroupName(i, groupType)
