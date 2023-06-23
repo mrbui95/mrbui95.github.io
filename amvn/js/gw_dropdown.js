@@ -249,49 +249,48 @@ const getUserData = async () => {
         return data.json()
     }).then(data => uInfo = data)
 
+    await fetch("https://mrbui95.github.io/fpl/data/c1/result/" + gw + ".json", {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+        }
+    }).then(data => {
+        return data.json()
+    }).then(data => gwData = data)
+
+    await fetch("https://mrbui95.github.io/fpl/data/c1/rank/" + gw + ".json", {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*"
+        }
+    }).then(data => {
+        return data.json()
+    }).then((data) => {
+        let rank = []
+        for (let i = 1; i <= 8; i++) {
+            const groupInfo = data[i]
+            const groupPointRs = Object.keys(groupInfo).map(key => {
+                const rs = groupInfo[key]
+                rs.uid = key
+                rs.name = uInfo[key]['name']
+                return rs
+            });
+            groupPointRs.sort((u1, u2) => {
+                if (u1.point == u2.point) {
+                    return u1.gd < u2.gd ? 1 : -1
+                }
+                return u1.point < u2.point ? 1 : -1
+            })
+            console.log(groupPointRs)
+            rank[i] = groupPointRs
+        }
+        gwRank = rank
+    })
+
     let gw = currentGw % 19
     if (gw < 8) {
-        await fetch("https://mrbui95.github.io/fpl/data/c1/rank/" + gw + ".json", {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json;charset=UTF-8",
-                "Access-Control-Allow-Origin": "*"
-            }
-        }).then(data => {
-            return data.json()
-        }).then((data) => {
-            let rank = []
-            for (let i = 1; i <= 8; i++) {
-                const groupInfo = data[i]
-                const groupPointRs = Object.keys(groupInfo).map(key => {
-                    const rs = groupInfo[key]
-                    rs.uid = key
-                    rs.name = uInfo[key]['name']
-                    return rs
-                });
-                groupPointRs.sort((u1, u2) => {
-                    if (u1.point == u2.point) {
-                        return u1.gd < u2.gd ? 1 : -1
-                    }
-                    return u1.point < u2.point ? 1 : -1
-                })
-                console.log(groupPointRs)
-                rank[i] = groupPointRs
-            }
-            gwRank = rank
-        })
-
-
-        await fetch("https://mrbui95.github.io/fpl/data/c1/result/" + gw + ".json", {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json;charset=UTF-8",
-                "Access-Control-Allow-Origin": "*"
-            }
-        }).then(data => {
-            return data.json()
-        }).then(data => gwData = data)
-
         await fetch("https://mrbui95.github.io/fpl/data/c1/group_1.json", {
             method: "GET",
             headers: {
@@ -356,8 +355,18 @@ const getUserData = async () => {
             }
         })
 
-    } else {
-        console.log(gw, 'GW >= 8')
+    } else if (gw < 17) {
+        await fetch("https://mrbui95.github.io/fpl/data/c1/group_period2_1.json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then(data => {
+            return data.json()
+        }).then((groupData) => {
+
+        })
     }
 
 
