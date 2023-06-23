@@ -268,6 +268,20 @@ const getUserData = async () => {
     }).then(data => uInfo = data)
 
     let gw = currentGw % 19
+    let urlGroupFixture = ''
+    let maxGroup = -1
+    let groupType = ''
+    if (gw < 8) {
+        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_1.json'
+        maxGroup = 8
+        groupType = 'PHAN_HANG'
+    } else if (gw < 17) {
+        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_period2_1.json'
+        maxGroup = 4
+        groupType = 'C_1234'
+    }
+
+
 
     await fetch("https://mrbui95.github.io/fpl/data/c1/result/" + gw + ".json", {
         method: "GET",
@@ -289,7 +303,7 @@ const getUserData = async () => {
         return data.json()
     }).then((data) => {
         let rank = []
-        for (let i = 1; i <= 8; i++) {
+        for (let i = 1; i <= maxGroup; i++) {
             const groupInfo = data[i]
             const groupPointRs = Object.keys(groupInfo).map(key => {
                 const rs = groupInfo[key]
@@ -308,21 +322,6 @@ const getUserData = async () => {
         }
         gwRank = rank
     })
-
-
-
-    let urlGroupFixture = ''
-    let maxGroup = -1
-    let groupType = ''
-    if (gw < 8) {
-        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_1.json'
-        maxGroup = 8
-        groupType = 'PHAN_HANG'
-    } else if (gw < 17) {
-        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_period2_1.json'
-        maxGroup = 4
-        groupType = 'C_1234'
-    }
 
     await fetch(urlGroupFixture, {
             method: "GET",
