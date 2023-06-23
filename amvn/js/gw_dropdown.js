@@ -48,27 +48,45 @@ for (let i = 1; i < 39; i += 1) {
     gameWeekSelect.appendChild(option)
 }
 
-const getGroupName = (index) => {
-    switch (index) {
-        case 1:
-            return 'Group A'
-        case 2:
-            return 'Group B'
-        case 3:
-            return 'Group C'
-        case 4:
-            return 'Group D'
-        case 5:
-            return 'Group E'
-        case 6:
-            return 'Group F'
-        case 7:
-            return 'Group G'
-        case 8:
-            return 'Group H'
-        default:
-            return 'Group'
+const getGroupName = (index, groupType) => {
+    if (groupType == 'PHAN_HANG') {
+        switch (index) {
+            case 1:
+                return 'Group A'
+            case 2:
+                return 'Group B'
+            case 3:
+                return 'Group C'
+            case 4:
+                return 'Group D'
+            case 5:
+                return 'Group E'
+            case 6:
+                return 'Group F'
+            case 7:
+                return 'Group G'
+            case 8:
+                return 'Group H'
+            default:
+                return 'Group'
+        }
+    } else if (groupType === 'C_1234') {
+        switch (index) {
+            case 1:
+                return 'Group C1'
+            case 2:
+                return 'Group C2'
+            case 3:
+                return 'Group C3'
+            case 4:
+                return 'Group C4'
+            default:
+                return 'Group'
+        }
     }
+
+    return 'Group'
+    
 }
 
 const groupResults = document.querySelector('#group_result')
@@ -249,6 +267,8 @@ const getUserData = async () => {
         return data.json()
     }).then(data => uInfo = data)
 
+    let gw = currentGw % 19
+
     await fetch("https://mrbui95.github.io/fpl/data/c1/result/" + gw + ".json", {
         method: "GET",
         headers: {
@@ -289,9 +309,22 @@ const getUserData = async () => {
         gwRank = rank
     })
 
-    let gw = currentGw % 19
+
+
+    let urlGroupFixture = ''
+    let maxGroup = -1
+    let groupType = ''
     if (gw < 8) {
-        await fetch("https://mrbui95.github.io/fpl/data/c1/group_1.json", {
+        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_1.json'
+        maxGroup = 8
+        groupType = 'PHAN_HANG'
+    } else if (gw < 17) {
+        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_period2_1.json'
+        maxGroup = 4
+        groupType = 'C_1234'
+    }
+
+    await fetch(urlGroupFixture, {
             method: "GET",
             headers: {
                 "Content-type": "application/json;charset=UTF-8",
@@ -304,11 +337,11 @@ const getUserData = async () => {
 
             clearGroupResult()
 
-            for (let i = 1; i <= 8; i++) {
+            for (let i = 1; i <= maxGroup; i++) {
                 const fixture = groupData[i][gw - 1]
                 console.log(fixture)
 
-                const groupName = getGroupName(i)
+                const groupName = getGroupName(i, groupType)
                 listMatch = []
 
                 let listMatchResult = []
@@ -354,20 +387,7 @@ const getUserData = async () => {
 
             }
         })
-
-    } else if (gw < 17) {
-        await fetch("https://mrbui95.github.io/fpl/data/c1/group_period2_1.json", {
-            method: "GET",
-            headers: {
-                "Content-type": "application/json;charset=UTF-8",
-                "Access-Control-Allow-Origin": "*"
-            }
-        }).then(data => {
-            return data.json()
-        }).then((groupData) => {
-
-        })
-    }
+    
 
 
 
