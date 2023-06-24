@@ -132,8 +132,8 @@ const createGroupResult = (groupType, groupInfo) => {
         tdHead_1.appendChild(document.createTextNode('Hạng'))
         tdHead_2.appendChild(document.createTextNode('HLV'))
         tdHead_3.appendChild(document.createTextNode('GW'))
-        tdHead_4.appendChild(document.createTextNode('TT'))
-        tdHead_5.appendChild(document.createTextNode('TV'))
+        tdHead_4.appendChild(document.createTextNode('Team Value'))
+        tdHead_5.appendChild(document.createTextNode('TOT'))
 
         trHead.appendChild(tdHead_1)
         trHead.appendChild(tdHead_2)
@@ -147,6 +147,7 @@ const createGroupResult = (groupType, groupInfo) => {
         let index = 1;
 
         groupInfo.rank.forEach((rank) => {
+            console.log(rank)
             const tr = document.createElement('tr')
             const td_1 = document.createElement('td')
             const td_2 = document.createElement('td')
@@ -157,8 +158,8 @@ const createGroupResult = (groupType, groupInfo) => {
             td_1.appendChild(document.createTextNode(index))
             td_2.appendChild(document.createTextNode(rank.name))
             td_3.appendChild(document.createTextNode(rank.gw_point))
-            td_4.appendChild(document.createTextNode(rank.total_point))
-            td_5.appendChild(document.createTextNode(rank.team_cost))
+            td_4.appendChild(document.createTextNode(rank.gd / 10))
+            td_5.appendChild(document.createTextNode(rank.point))
 
             tr.appendChild(td_1)
             tr.appendChild(td_2)
@@ -189,6 +190,10 @@ const createGroupResult = (groupType, groupInfo) => {
             index += 1
         })
 
+        table.appendChild(tbody)
+        table.style.border = 'solid 1px'
+        result.appendChild(table)
+        
     } else if (groupType === 'C_1234') {
         // Kết quả trận đấu vòng
         const table = document.createElement('table')
@@ -376,12 +381,13 @@ const getUserData = async () => {
         let rank = []
         for (let i = 1; i <= maxGroup; i++) {
             const groupInfo = data[i]
-            const groupPointRs = Object.keys(groupInfo).map(key => {
+            let groupPointRs = Object.keys(groupInfo).map(key => {
                 const rs = groupInfo[key]
                 rs.uid = key
                 rs.name = uInfo[key]['name']
                 return rs
             });
+            console.log(groupPointRs)
             groupPointRs.sort((u1, u2) => {
                 if (u1.point == u2.point) {
                     return u1.gd < u2.gd ? 1 : -1
@@ -411,8 +417,6 @@ const getUserData = async () => {
             const groupName = getGroupName(i, groupType)
 
             if (gw <= 8) {
-                console.log(gwRank[i])
-
                 groupInfo = {
                     index: i,
                     groupName,
