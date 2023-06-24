@@ -272,7 +272,7 @@ const getUserData = async () => {
     let maxGroup = -1
     let groupType = ''
     let fixtureIndex = 1
-    if (gw < 8) {
+    if (gw <= 8) {
         urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_period1_1.json'
         maxGroup = 8
         groupType = 'PHAN_HANG'
@@ -316,7 +316,7 @@ const getUserData = async () => {
             });
             groupPointRs.sort((u1, u2) => {
                 if (u1.point == u2.point) {
-                    return u1.gd < u2.gd ? 1 : -1
+                    return u1.gd < u2.gd ? 1 : -1 
                 }
                 return u1.point < u2.point ? 1 : -1
             })
