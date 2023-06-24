@@ -273,7 +273,7 @@ const getUserData = async () => {
     let groupType = ''
     let fixtureIndex = 1
     if (gw < 8) {
-        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_1.json'
+        urlGroupFixture = 'https://mrbui95.github.io/fpl/data/c1/group_period1_1.json'
         maxGroup = 8
         groupType = 'PHAN_HANG'
         fixtureIndex = gw - 1
