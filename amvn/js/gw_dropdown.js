@@ -193,7 +193,7 @@ const createGroupResult = (groupType, groupInfo) => {
         table.appendChild(tbody)
         table.style.border = 'solid 1px'
         result.appendChild(table)
-        
+
     } else if (groupType === 'C_1234') {
         // Kết quả trận đấu vòng
         const table = document.createElement('table')
@@ -327,6 +327,98 @@ const createGroupResult = (groupType, groupInfo) => {
     groupResults.appendChild(result)
 }
 
+
+const createFinalResult = (gw, data) => {
+
+    const result = document.createElement('div')
+
+    for (let i = 1; i <= 4; i++) {
+        const groupGame = data[i]
+
+        const groupName = getGroupName(i, 'C_1234')
+
+        // Tên Bảng
+        const groupNameEle = document.createElement('div')
+        groupNameEle.setAttribute('id', `group_${groupInfo.index}`)
+        groupNameEle.innerHTML = groupName
+        groupNameEle.style.fontWeight = 800
+        groupNameEle.style.padding = '10px 0'
+        result.appendChild(groupNameEle)
+
+        // Kết quả trận đấu vòng
+        const table = document.createElement('table')
+        table.classList.add('table')
+        table.classList.add('table-bordered')
+        table.classList.add('table-striped')
+        table.classList.add('table-sm')
+        const tbody = document.createElement('tbody')
+
+        if (gw === 17 || gw === 36) {
+            result.appendChild(document.createTextNode('Tứ kết'))
+
+            for (let j = 1; j <= 4; j++) {
+                const game = groupGame[j]
+
+                const team1 = game[0]
+                const team2 = game[1]
+                console.log(team1, team2)
+
+                const player1 = gwData[team1]
+                const player2 = gwData[team2]
+                const name1 = uInfo[team1]['name']
+                const name2 = uInfo[team2]['name']
+                const point1 = player1['entry_history']['points'] - player1['entry_history']['event_transfers_cost']
+                const point2 = player2['entry_history']['points'] - player2['entry_history']['event_transfers_cost']
+
+
+                const tr = document.createElement('tr')
+                const td1 = document.createElement('td')
+                const td2 = document.createElement('td')
+                const td3 = document.createElement('td')
+                const td4 = document.createElement('td')
+
+
+                if (point1 > point2) {
+                    td1.classList.add('winner_cell')
+                } else if (point1 < point2) {
+                    td4.classList.add('winner_cell')
+                }
+
+                td1.appendChild(document.createTextNode(name1))
+                td2.appendChild(document.createTextNode(point1))
+                td3.appendChild(document.createTextNode(point2))
+                td4.appendChild(document.createTextNode(name2))
+
+                tr.appendChild(td1)
+                tr.appendChild(td2)
+                tr.appendChild(td3)
+                tr.appendChild(td4)
+
+                tbody.appendChild(tr)
+            }
+
+            table.appendChild(tbody)
+            table.style.border = 'solid 1px'
+
+            result.appendChild(table)
+
+
+
+
+        } else if (gw === 18 || gw === 37) {
+            result.appendChild(document.createTextNode('Bán kết'))
+        } else if (gw === 19 || gw === 38) {
+            result.appendChild(document.createTextNode('Chung kết'))
+        }
+
+
+
+
+    }
+
+    groupResults.appendChild(result)
+}
+
 const getUserData = async () => {
     console.log('==========GET USER DATA============')
 
@@ -369,109 +461,128 @@ const getUserData = async () => {
         return data.json()
     }).then(data => gwData = data)
 
-    await fetch("https://mrbui95.github.io/fpl/data/c1/rank/" + gw + ".json", {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
-        }
-    }).then(data => {
-        return data.json()
-    }).then((data) => {
-        let rank = []
-        for (let i = 1; i <= maxGroup; i++) {
-            const groupInfo = data[i]
-            let groupPointRs = Object.keys(groupInfo).map(key => {
-                const rs = groupInfo[key]
-                rs.uid = key
-                rs.name = uInfo[key]['name']
-                return rs
-            });
-            console.log(groupPointRs)
-            groupPointRs.sort((u1, u2) => {
-                if (u1.point == u2.point) {
-                    return u1.gd < u2.gd ? 1 : -1
-                }
-                return u1.point < u2.point ? 1 : -1
-            })
-            console.log(groupPointRs)
-            rank[i] = groupPointRs
-        }
-        gwRank = rank
-    })
 
-    await fetch(urlGroupFixture, {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*"
-        }
-    }).then(data => {
-        return data.json()
-    }).then((groupData) => {
-        console.log(groupData)
+    if (gw < 17 || (gw > 19 && gw < 36)) {
+        await fetch("https://mrbui95.github.io/fpl/data/c1/rank/" + gw + ".json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then(data => {
+            return data.json()
+        }).then((data) => {
+            let rank = []
+            for (let i = 1; i <= maxGroup; i++) {
+                const groupInfo = data[i]
+                let groupPointRs = Object.keys(groupInfo).map(key => {
+                    const rs = groupInfo[key]
+                    rs.uid = key
+                    rs.name = uInfo[key]['name']
+                    return rs
+                });
+                console.log(groupPointRs)
+                groupPointRs.sort((u1, u2) => {
+                    if (u1.point == u2.point) {
+                        return u1.gd < u2.gd ? 1 : -1
+                    }
+                    return u1.point < u2.point ? 1 : -1
+                })
+                console.log(groupPointRs)
+                rank[i] = groupPointRs
+            }
+            gwRank = rank
+        })
 
-        clearGroupResult()
+        await fetch(urlGroupFixture, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then(data => {
+            return data.json()
+        }).then((groupData) => {
+            console.log(groupData)
 
-        for (let i = 1; i <= maxGroup; i++) {
-            const groupName = getGroupName(i, groupType)
+            clearGroupResult()
 
-            if (gw <= 8) {
-                groupInfo = {
-                    index: i,
-                    groupName,
-                    rank: gwRank[i]
-                }
+            for (let i = 1; i <= maxGroup; i++) {
+                const groupName = getGroupName(i, groupType)
 
-                result = createGroupResult(groupType, groupInfo)
-            } else if (gw < 17) {
-                const fixture = groupData[i][fixtureIndex]
-                console.log(fixture)
+                if (gw <= 8) {
+                    groupInfo = {
+                        index: i,
+                        groupName,
+                        rank: gwRank[i]
+                    }
+
+                    result = createGroupResult(groupType, groupInfo)
+                } else if (gw < 17) {
+                    const fixture = groupData[i][fixtureIndex]
+                    console.log(fixture)
 
 
-                listMatch = []
+                    listMatch = []
 
-                let listMatchResult = []
+                    let listMatchResult = []
 
-                console.log('-----------', groupName, '----------')
-                fixture.forEach((match) => {
-                    console.log(match)
-                    const team1 = match[0]
-                    const team2 = match[1]
-                    const player1 = gwData[team1]
-                    const player2 = gwData[team2]
-                    const name1 = uInfo[team1]['name']
-                    const name2 = uInfo[team2]['name']
-                    const point1 = player1['entry_history']['points'] - player1['entry_history']['event_transfers_cost']
-                    const point2 = player2['entry_history']['points'] - player2['entry_history']['event_transfers_cost']
+                    console.log('-----------', groupName, '----------')
+                    fixture.forEach((match) => {
+                        console.log(match)
+                        const team1 = match[0]
+                        const team2 = match[1]
+                        const player1 = gwData[team1]
+                        const player2 = gwData[team2]
+                        const name1 = uInfo[team1]['name']
+                        const name2 = uInfo[team2]['name']
+                        const point1 = player1['entry_history']['points'] - player1['entry_history']['event_transfers_cost']
+                        const point2 = player2['entry_history']['points'] - player2['entry_history']['event_transfers_cost']
 
-                    listMatchResult = listMatchResult.concat({
-                        team1,
-                        team2,
-                        name1,
-                        name2,
-                        point1,
-                        point2
+                        listMatchResult = listMatchResult.concat({
+                            team1,
+                            team2,
+                            name1,
+                            name2,
+                            point1,
+                            point2
+                        })
+
                     })
 
-                })
+                    console.log(gwRank[i])
 
-                console.log(gwRank[i])
+                    groupInfo = {
+                        index: i,
+                        listMatchResult,
+                        groupName,
+                        rank: gwRank[i]
+                    }
 
-                groupInfo = {
-                    index: i,
-                    listMatchResult,
-                    groupName,
-                    rank: gwRank[i]
+                    result = createGroupResult(groupType, groupInfo)
+
+                    console.log('-----------', groupName, '----------')
                 }
-
-                result = createGroupResult(groupType, groupInfo)
-
-                console.log('-----------', groupName, '----------')
             }
-        }
-    })
+        })
 
+    } else {
+        await fetch("https://mrbui95.github.io/fpl/data/c1/final_" + gw + ".json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then(data => {
+            return data.json()
+        }).then((data) => {
+            console.log(data)
+
+            clearGroupResult()
+
+            createFinalResult(gw, data)
+        })
+    }
 
 
 
