@@ -330,6 +330,7 @@ const createGroupResult = (groupType, groupInfo) => {
 
 const createFinalResult = (gw, data) => {
 
+    console.log(data)
     const result = document.createElement('div')
 
     for (let i = 1; i <= 4; i++) {
@@ -353,64 +354,67 @@ const createFinalResult = (gw, data) => {
         table.classList.add('table-sm')
         const tbody = document.createElement('tbody')
 
+        let maxGame = 4
+
         if (gw === 17 || gw === 36) {
             result.appendChild(document.createTextNode('Tứ kết'))
-
-            for (let j = 1; j <= 4; j++) {
-                const game = groupGame[j]
-
-                const team1 = game[0]
-                const team2 = game[1]
-                console.log(team1, team2)
-
-                const player1 = gwData[team1]
-                const player2 = gwData[team2]
-                const name1 = uInfo[team1]['name']
-                const name2 = uInfo[team2]['name']
-                const point1 = player1['entry_history']['points'] - player1['entry_history']['event_transfers_cost']
-                const point2 = player2['entry_history']['points'] - player2['entry_history']['event_transfers_cost']
-
-
-                const tr = document.createElement('tr')
-                const td1 = document.createElement('td')
-                const td2 = document.createElement('td')
-                const td3 = document.createElement('td')
-                const td4 = document.createElement('td')
-
-
-                if (point1 > point2) {
-                    td1.classList.add('winner_cell')
-                } else if (point1 < point2) {
-                    td4.classList.add('winner_cell')
-                }
-
-                td1.appendChild(document.createTextNode(name1))
-                td2.appendChild(document.createTextNode(point1))
-                td3.appendChild(document.createTextNode(point2))
-                td4.appendChild(document.createTextNode(name2))
-
-                tr.appendChild(td1)
-                tr.appendChild(td2)
-                tr.appendChild(td3)
-                tr.appendChild(td4)
-
-                tbody.appendChild(tr)
-            }
-
-            table.appendChild(tbody)
-            table.style.border = 'solid 1px'
-
-            result.appendChild(table)
-
-
-
-
+            maxGame = 4
         } else if (gw === 18 || gw === 37) {
             result.appendChild(document.createTextNode('Bán kết'))
+            maxGame = 2
         } else if (gw === 19 || gw === 38) {
             result.appendChild(document.createTextNode('Chung kết'))
+            maxGame = 2
         }
 
+        for (let j = 1; j <= maxGame; j++) {
+            const game = groupGame[j]
+            console.log(game)
+            if (typeof game === 'undefined')
+                continue
+
+            const team1 = game[0]
+            const team2 = game[1]
+            console.log(team1, team2)
+
+            const player1 = gwData[team1]
+            const player2 = gwData[team2]
+            const name1 = uInfo[team1]['name']
+            const name2 = uInfo[team2]['name']
+            const point1 = player1['entry_history']['points'] - player1['entry_history']['event_transfers_cost']
+            const point2 = player2['entry_history']['points'] - player2['entry_history']['event_transfers_cost']
+
+
+            const tr = document.createElement('tr')
+            const td1 = document.createElement('td')
+            const td2 = document.createElement('td')
+            const td3 = document.createElement('td')
+            const td4 = document.createElement('td')
+
+
+            if (point1 > point2) {
+                td1.classList.add('winner_cell')
+            } else if (point1 < point2) {
+                td4.classList.add('winner_cell')
+            }
+
+            td1.appendChild(document.createTextNode(name1))
+            td2.appendChild(document.createTextNode(point1))
+            td3.appendChild(document.createTextNode(point2))
+            td4.appendChild(document.createTextNode(name2))
+
+            tr.appendChild(td1)
+            tr.appendChild(td2)
+            tr.appendChild(td3)
+            tr.appendChild(td4)
+
+            tbody.appendChild(tr)
+        }
+
+        table.appendChild(tbody)
+        table.style.border = 'solid 1px'
+
+        result.appendChild(table)
 
 
 
@@ -433,6 +437,9 @@ const getUserData = async () => {
     }).then(data => uInfo = data)
 
     let gw = currentGw % 19
+    if (gw === 0) {
+        gw = currentGw
+    }
     let urlGroupFixture = ''
     let maxGroup = -1
     let groupType = ''
