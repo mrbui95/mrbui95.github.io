@@ -156,7 +156,13 @@ const createGroupResult = (groupType, groupInfo) => {
             const td_5 = document.createElement('td')
 
             td_1.appendChild(document.createTextNode(index))
-            td_2.appendChild(document.createTextNode(rank.name))
+            const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/history"
+            const aName = document.createElement('a')
+            aName.appendChild(document.createTextNode(rank.name))
+            aName.setAttribute('href', link)
+            aName.setAttribute('target', '_blank')
+            td_2.appendChild(aName)
+            td_2.classList.add('font_weight_bold')
             td_3.appendChild(document.createTextNode(rank.gw_point))
             td_4.appendChild(document.createTextNode(rank.gd / 10))
             td_5.appendChild(document.createTextNode(rank.point))
@@ -182,6 +188,7 @@ const createGroupResult = (groupType, groupInfo) => {
                     break
                 case 7:
                 case 8:
+                case 9:
                     tr.classList.add('rank_c4')
                     break
             }
