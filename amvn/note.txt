@@ -5,4 +5,9 @@ B2: Tạo league:
     amvn\data\c1\group_period1_1.json
     Danh sách id thành viên nhập theo dạng json các bảng A,B,... lần lượt bắt đầu từ 1
 
-B3: 
+B3: Lấy thông tin user:
+    amvn\tools\getUserInfo.py
+    => ghi dữ liệu vào file amvn\data\u_info.json
+
+B4: Tạo dữ liệu mặc định
+    amvn\tools\create_default_data.py

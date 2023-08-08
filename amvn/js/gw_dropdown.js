@@ -1,7 +1,7 @@
 const gameWeekSelect = document.querySelector('#gw_select')
 
 
-let currentGw = -1
+let currentGw = 1
 let uInfo
 let gwData
 let gwRank
@@ -426,7 +426,7 @@ const createFinalResult = (gw, data) => {
 const getUserData = async () => {
     console.log('==========GET USER DATA============')
 
-    await fetch("https://mrbui95.github.io/amvn23/data/u_info.json", {
+    await fetch("https://mrbui95.github.io/amvn/data/u_info.json", {
         method: "GET",
         headers: {
             "Content-type": "application/json;charset=UTF-8",
@@ -445,12 +445,12 @@ const getUserData = async () => {
     let groupType = ''
     let fixtureIndex = 1
     if (gw <= 8) {
-        urlGroupFixture = 'https://mrbui95.github.io/amvn23/data/c1/group_period1_1.json'
+        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
         maxGroup = 8
         groupType = 'PHAN_HANG'
         fixtureIndex = gw - 1
     } else if (gw < 17) {
-        urlGroupFixture = 'https://mrbui95.github.io/amvn23/data/c1/group_period2_1.json'
+        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period2_1.json'
         maxGroup = 4
         groupType = 'C_1234'
         fixtureIndex = gw - 8
@@ -458,7 +458,7 @@ const getUserData = async () => {
 
 
 
-    await fetch("https://mrbui95.github.io/amvn23/data/c1/result/" + gw + ".json", {
+    await fetch("https://mrbui95.github.io/amvn/data/c1/result/" + gw + ".json", {
         method: "GET",
         headers: {
             "Content-type": "application/json;charset=UTF-8",
@@ -470,7 +470,7 @@ const getUserData = async () => {
 
 
     if (gw < 17 || (gw > 19 && gw < 36)) {
-        await fetch("https://mrbui95.github.io/amvn23/data/c1/rank/" + gw + ".json", {
+        await fetch("https://mrbui95.github.io/amvn/data/c1/rank/" + gw + ".json", {
             method: "GET",
             headers: {
                 "Content-type": "application/json;charset=UTF-8",
@@ -574,7 +574,7 @@ const getUserData = async () => {
         })
 
     } else {
-        await fetch("https://mrbui95.github.io/amvn23/data/c1/final_" + gw + ".json", {
+        await fetch("https://mrbui95.github.io/amvn/data/c1/final_" + gw + ".json", {
             method: "GET",
             headers: {
                 "Content-type": "application/json;charset=UTF-8",
