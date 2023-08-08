@@ -4,7 +4,7 @@ import time
 import json
 from git import Repo
 
-current_gw = 1
+current_gw = 3
 
 rank = {}
 
@@ -35,7 +35,9 @@ if (current_gw == 1):
 
     print(rank)
 else:
-    print(current_gw)
+    prev_gw = current_gw - 1
+    response = requests.get('https://mrbui95.github.io/amvn/data/c1/rank/' + str(prev_gw) + '.json')
+    rank = response.json()
 
 fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
