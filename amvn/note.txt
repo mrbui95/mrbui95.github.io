@@ -1,0 +1,8 @@
+B1: Lấy danh sách thành viên trong league
+        amvn\tools\getLeagueUser.py
+
+B2: Tạo league:
+    amvn\data\c1\group_period1_1.json
+    Danh sách id thành viên nhập theo dạng json các bảng A,B,... lần lượt bắt đầu từ 1
+
+B3: 

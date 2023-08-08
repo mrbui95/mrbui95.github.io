@@ -35,12 +35,12 @@ while hasNext == True:
     
 
     # In danh sách kèm tên
-    # for user in listUser:
-    #     print ('\'' + str(user['entry']) + '\'' + '|' + user['entry_name'] + '|' + user['player_first_name'] + ' ' + user['player_last_name'] +',')
+    for user in listUser:
+        print ('\'' + str(user['entry']) + '\'' + '|' + user['entry_name'] + '|' + user['player_first_name'] + ' ' + user['player_last_name'] +',')
 
     #In danh sách chỉ có id
-    for user in listUser:
-        print ('"' + str(user['entry']) + '",')
+    #for user in listUser:
+    #    print ('"' + str(user['entry']) + '",')
 
     page = page + 1
 

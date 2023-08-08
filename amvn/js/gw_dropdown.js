@@ -8,7 +8,7 @@ let gwRank
 
 
 const getCurrentGW = async () => {
-    await fetch("https://mrbui95.github.io/fpl/data/current_gw.json", {
+    await fetch("https://mrbui95.github.io/amvn/data/current_gw.json", {
         method: "GET",
         headers: {
             "Content-type": "application/json;charset=UTF-8",
