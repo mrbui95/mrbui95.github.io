@@ -22,6 +22,8 @@ fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\u_info.json'
 file = codecs.open(fileName, 'w', 'utf8')
 file.write(json.dumps(data))
 
+file.close()
+
 from git import Repo
 
 repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
