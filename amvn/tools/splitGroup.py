@@ -4,7 +4,7 @@ import codecs
 import json
 import time
 
-response = requests.get('https://mrbui95.github.io/fpl/data/user_c1.json')
+response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
 
 listTeam = response.json()['league']
 
@@ -70,7 +70,7 @@ for group in data:
 print(json.dumps(result))
 
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\fpl\\data\\c1\\group_' + str(stage) + '.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\group_' + str(stage) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(result))
 

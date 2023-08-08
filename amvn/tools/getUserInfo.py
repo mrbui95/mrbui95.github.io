@@ -4,7 +4,7 @@ import time
 import json
 from git import Repo
 
-response = requests.get('https://mrbui95.github.io/amvn23/data/user_c1.json')
+response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
 
 listTeam = response.json()['league']
 
@@ -18,7 +18,7 @@ for team in listTeam:
 
 
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn23\\data\\u_info.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\u_info.json'
 file = codecs.open(fileName, 'w', 'utf8')
 file.write(json.dumps(data))
 

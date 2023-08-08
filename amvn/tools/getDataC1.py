@@ -3,7 +3,7 @@ import codecs
 import json
 import time
 
-response = requests.get('https://mrbui95.github.io/amvn23/data/user_c1.json')
+response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
 
 print(response.json())
 
@@ -28,7 +28,7 @@ for currentGw in range (1, 2):
 
 
 
-    fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn23\\data\\c1\\result\\' + str(currentGw) + '.json'
+    fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(currentGw) + '.json'
     file1 = codecs.open(fileName, 'w', 'utf8')
     file1.write(json.dumps(data))
 

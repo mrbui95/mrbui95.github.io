@@ -6,11 +6,11 @@ from git import Repo
 
 current_gw = 1
 
-response = requests.get("https://mrbui95.github.io/amvn23/data/c1/group_1.json")
+response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_1.json")
 list_team = response.json()
 print(list_team)
 
-url_current_gw_result = "https://mrbui95.github.io/amvn23/data/c1/result/" + str(current_gw) + ".json"
+url_current_gw_result = "https://mrbui95.github.io/amvn/data/c1/result/" + str(current_gw) + ".json"
 response = requests.get(url_current_gw_result)
 
 gw_result = response.json()
@@ -33,7 +33,7 @@ def get_rank():
     elif (current_gw <= 8):
         print(str(current_gw))
         prev_gw = current_gw - 1
-        response = requests.get("https://mrbui95.github.io/amvn23/data/c1/rank/" + str(prev_gw) + ".json")
+        response = requests.get("https://mrbui95.github.io/amvn/data/c1/rank/" + str(prev_gw) + ".json")
         last_rank = response.json()
 
 

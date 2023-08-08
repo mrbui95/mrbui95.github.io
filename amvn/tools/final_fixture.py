@@ -9,7 +9,7 @@ curr_gw = 19
 
 prev_gw = curr_gw - 1
 
-url_current_gw_result = "https://mrbui95.github.io/amvn23/data/c1/result/" + str(curr_gw) + ".json"
+url_current_gw_result = "https://mrbui95.github.io/amvn/data/c1/result/" + str(curr_gw) + ".json"
 response = requests.get(url_current_gw_result)
 
 gw_result = response.json()
@@ -19,7 +19,7 @@ gw_result = response.json()
 data = {}
 
 if (curr_gw == 17 or curr_gw == 36):
-    response = requests.get("https://mrbui95.github.io/amvn23/data/c1/rank/" + str(prev_gw) + ".json")
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/rank/" + str(prev_gw) + ".json")
     last_rank = response.json()
     for i in range(1,5):
         group_rank = last_rank[str(i)]
@@ -61,7 +61,7 @@ if (curr_gw == 17 or curr_gw == 36):
 
         print('-----------END_' + str(i) + '---------')
 elif (curr_gw == 18 or curr_gw == 37):
-    response = requests.get("https://mrbui95.github.io/amvn23/data/c1/final_" + str(prev_gw) + ".json")
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/final_" + str(prev_gw) + ".json")
     last_rank = response.json()
     # print(last_rank)
     
@@ -95,7 +95,7 @@ elif (curr_gw == 18 or curr_gw == 37):
         data[str(i)] = semi_final
 
 elif  (curr_gw == 19 or curr_gw == 38):
-    response = requests.get("https://mrbui95.github.io/amvn23/data/c1/final_" + str(prev_gw) + ".json")
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/final_" + str(prev_gw) + ".json")
     last_rank = response.json()
 
     for i in range(1,5):
@@ -137,7 +137,7 @@ elif  (curr_gw == 19 or curr_gw == 38):
     
 print(data)
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn23\\data\\c1\\final_' + str(curr_gw) + '.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\final_' + str(curr_gw) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(data))
 

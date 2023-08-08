@@ -7,7 +7,7 @@ currentGw = '35'
 data={}
 headers = {'x-requested-with':'https://fantasy.premierleague.com', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'}
 
-response = requests.get('https://mrbui95.github.io/fpl/data/user.json')
+response = requests.get('https://mrbui95.github.io/amvn/data/user.json')
 
 print(response.json())
 
@@ -60,7 +60,7 @@ print(json.dumps(data))
 
 
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\fpl\\data\\resutl_gw' + currentGw + '.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\resutl_gw' + currentGw + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(data))
 

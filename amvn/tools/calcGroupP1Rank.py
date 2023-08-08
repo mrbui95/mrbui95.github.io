@@ -4,13 +4,13 @@ import time
 import json
 from git import Repo
 
-current_gw = 7
+current_gw = 1
 
-response = requests.get("https://mrbui95.github.io/amvn23/data/c1/group_period1_1.json")
+response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period1_1.json")
 list_team = response.json()
 print(list_team)
 
-url_current_gw_result = "https://mrbui95.github.io/amvn23/data/c1/result/" + str(current_gw) + ".json"
+url_current_gw_result = "https://mrbui95.github.io/amvn/data/c1/result/" + str(current_gw) + ".json"
 response = requests.get(url_current_gw_result)
 
 gw_result = response.json()
@@ -45,7 +45,7 @@ def get_rank():
 live_rank = get_rank()
 # print(live_rank)
     
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\fpl\\data\\c1\\rank\\' + str(current_gw) + '.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(live_rank))
 

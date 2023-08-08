@@ -40,7 +40,7 @@ def make_fixture(teams):
     return fixtures
 
 
-response = requests.get("https://mrbui95.github.io/amvn23/data/c1/rank/" + str(prev_gw) + ".json")
+response = requests.get("https://mrbui95.github.io/amvn/data/c1/rank/" + str(prev_gw) + ".json")
 last_rank = response.json()
 
 
@@ -96,7 +96,7 @@ data['4'] = fixture
 
 # print(data)
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn23\\data\\c1\\group_period1_' + str(stage) + '.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\group_period1_' + str(stage) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(data))
 
