@@ -485,7 +485,7 @@ const getUserData = async () => {
                 let groupPointRs = Object.keys(groupInfo).map(key => {
                     const rs = groupInfo[key]
                     rs.uid = key
-                    rs.name = uInfo[key]['name']
+                    rs.name = uInfo[key] ? uInfo[key]['name'] : key
                     return rs
                 });
                 console.log(groupPointRs)
