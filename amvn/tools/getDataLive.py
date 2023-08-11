@@ -14,13 +14,14 @@ current_gw = data_curr_gw['current_event']
 data = {}
 data['current_gw'] = current_gw
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\fpl\\data\\current_gw.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\current_gw.json'
 file = codecs.open(fileName, 'w', 'utf8')
 file.write(json.dumps(data))
+file.close()
 
 # curr_gw_sv = 0
 
-curr_gw_sv_response = requests.get('https://mrbui95.github.io/fpl/data/current_gw.json').json()
+curr_gw_sv_response = requests.get('https://mrbui95.github.io/amvn/data/current_gw.json').json()
 curr_gw_sv = curr_gw_sv_response['current_gw']
 
 print (current_gw, curr_gw_sv)

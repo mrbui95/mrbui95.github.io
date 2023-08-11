@@ -4,7 +4,7 @@ import time
 import json
 from git import Repo
 
-current_gw = 3
+current_gw = 2
 
 rank = {}
 
