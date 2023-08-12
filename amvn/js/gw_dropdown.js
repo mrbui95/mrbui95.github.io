@@ -96,7 +96,7 @@ const clearGroupResult = () => {
     while (groupResults.firstChild) groupResults.removeChild(groupResults.firstChild);
 }
 
-const createGroupResult = (groupType, groupInfo) => {
+const createGroupResult = (groupType, groupInfo, gw) => {
     const result = document.createElement('div')
 
 
@@ -156,7 +156,8 @@ const createGroupResult = (groupType, groupInfo) => {
             const td_5 = document.createElement('td')
 
             td_1.appendChild(document.createTextNode(index))
-            const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/history"
+            // const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/history"
+            const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/event/"  + gw
             const aName = document.createElement('a')
             aName.appendChild(document.createTextNode(rank.name))
             aName.setAttribute('href', link)
@@ -531,7 +532,7 @@ const getUserData = async () => {
                         rank: gwRank[i]
                     }
 
-                    result = createGroupResult(groupType, groupInfo)
+                    result = createGroupResult(groupType, groupInfo, gw)
                 } else if (gw < 17) {
                     const fixture = groupData[i][fixtureIndex]
                     console.log(fixture)
@@ -573,7 +574,7 @@ const getUserData = async () => {
                         rank: gwRank[i]
                     }
 
-                    result = createGroupResult(groupType, groupInfo)
+                    result = createGroupResult(groupType, groupInfo, gw)
 
                     console.log('-----------', groupName, '----------')
                 }
