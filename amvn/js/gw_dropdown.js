@@ -447,21 +447,21 @@ const getUserData = async () => {
     if (gw === 0) {
         gw = currentGw
     }
-    let urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
+    let urlGroupFixture = ''
     let maxGroup = -1
     let groupType = ''
     let fixtureIndex = 1
-    // if (gw <= 8) {
-    //     urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
-    //     maxGroup = 8
-    //     groupType = 'PHAN_HANG'
-    //     fixtureIndex = gw - 1
-    // } else if (gw < 17) {
-    //     urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period2_1.json'
-    //     maxGroup = 4
-    //     groupType = 'C_1234'
-    //     fixtureIndex = gw - 8
-    // }
+    if (gw <= 8) {
+        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
+        maxGroup = 8
+        groupType = 'PHAN_HANG'
+        fixtureIndex = gw - 1
+    } else if (gw < 17) {
+        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period2_1.json'
+        maxGroup = 4
+        groupType = 'C_1234'
+        fixtureIndex = gw - 8
+    }
 
     // Xóa dữ liệu cũ
     clearGroupResult()
