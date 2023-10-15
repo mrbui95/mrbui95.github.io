@@ -31,7 +31,7 @@ def get_rank():
             team['gw_point'] = gw_point
             total_point = gw_result[str(teamId)]['entry_history']['total_points']
             team['point'] = total_point
-            team_cost = gw_result[str(teamId)]['entry_history']['bank'] + gw_result[str(teamId)]['entry_history']['value']
+            team_cost = gw_result[str(teamId)]['entry_history']['value']
             team['gd'] = team_cost
             group_rank[teamId] = team
             team = {}

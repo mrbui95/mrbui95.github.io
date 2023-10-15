@@ -6,7 +6,7 @@ from git import Repo
 
 current_gw = 9
 
-response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period2_1.json")
+response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period1_1.json")
 list_team = response.json()
 print(list_team)
 
@@ -179,6 +179,7 @@ live_rank = get_rank()
 fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(live_rank))
+file1.close()
 
 
 from git import Repo

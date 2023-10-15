@@ -8,7 +8,7 @@ response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
 
 listTeam = response.json()['league']
 
-stage = 1   
+stage = 2   
 
 
 def make_fixture(teams):

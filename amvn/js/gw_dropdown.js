@@ -99,7 +99,6 @@ const clearGroupResult = () => {
 const createGroupResult = (groupType, groupInfo, gw) => {
     const result = document.createElement('div')
 
-
     // Tên Bảng
     const groupNameEle = document.createElement('div')
     groupNameEle.setAttribute('id', `group_${groupInfo.index}`)
@@ -157,7 +156,7 @@ const createGroupResult = (groupType, groupInfo, gw) => {
 
             td_1.appendChild(document.createTextNode(index))
             // const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/history"
-            const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/event/"  + gw
+            const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/event/" + gw
             const aName = document.createElement('a')
             aName.appendChild(document.createTextNode(rank.name))
             aName.setAttribute('href', link)
@@ -448,21 +447,45 @@ const getUserData = async () => {
     if (gw === 0) {
         gw = currentGw
     }
-    let urlGroupFixture = ''
+    let urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
     let maxGroup = -1
     let groupType = ''
     let fixtureIndex = 1
-    if (gw <= 8) {
-        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
-        maxGroup = 8
-        groupType = 'PHAN_HANG'
-        fixtureIndex = gw - 1
-    } else if (gw < 17) {
-        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period2_1.json'
-        maxGroup = 4
-        groupType = 'C_1234'
-        fixtureIndex = gw - 8
+    // if (gw <= 8) {
+    //     urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
+    //     maxGroup = 8
+    //     groupType = 'PHAN_HANG'
+    //     fixtureIndex = gw - 1
+    // } else if (gw < 17) {
+    //     urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period2_1.json'
+    //     maxGroup = 4
+    //     groupType = 'C_1234'
+    //     fixtureIndex = gw - 8
+    // }
+
+    // Xóa dữ liệu cũ
+    clearGroupResult()
+
+    // Tên Vòng đấu
+    let groupTypeName = ''
+    switch (groupType) {
+        case 'PHAN_HANG':
+            groupTypeName = 'VÒNG PHÂN HẠNG'
+            break
+        case 'C_1234':
+            groupTypeName = 'VÒNG BẢNG'
+            break
+        default:
+            groupTypeName = 'VÒNG CHUNG KẾT'
+            break
     }
+
+    const groupTypeNameEle = document.createElement('div')
+    groupTypeNameEle.setAttribute('id', `group_type_name`)
+    groupTypeNameEle.innerHTML = groupTypeName
+    groupTypeNameEle.style.fontWeight = 1000
+    groupTypeNameEle.style.padding = '10px 0'
+    groupResults.appendChild(groupTypeNameEle)
 
 
 
@@ -520,7 +543,7 @@ const getUserData = async () => {
         }).then((groupData) => {
             console.log(groupData)
 
-            clearGroupResult()
+            
 
             for (let i = 1; i <= maxGroup; i++) {
                 const groupName = getGroupName(i, groupType)
@@ -592,8 +615,6 @@ const getUserData = async () => {
             return data.json()
         }).then((data) => {
             console.log(data)
-
-            clearGroupResult()
 
             createFinalResult(gw, data)
         })

@@ -3,6 +3,9 @@ import codecs
 import time
 import json
 from git import Repo
+from datetime import datetime
+import pytz
+import schedule
 
 # uid = 250006
 # uid = 2114046
@@ -65,10 +68,13 @@ def get_current_point(uid):
             # print('-------------------------------')
             # print(element)
             playerData = data_live['elements'][element - 1]
-            # print(playerData)
+            print('----------------playerData:' + str(json.dumps(playerData)))
             explain = playerData['explain']
             # print(explain)
             totalMinsPlay = 0
+
+            player_point = 0
+
             # 1 gw có thể có nhiều trận
             for gw in explain:
                 fixture = gw['fixture']
@@ -77,7 +83,7 @@ def get_current_point(uid):
                 for stat in gw['stats']:
                     if (stat['identifier'] == 'minutes'):
                         totalMinsPlay += stat['value']
-                    currentPoint += stat['points']
+                    player_point += stat['points']
                     # if totalMinsPlay == 0:
                     #     print('player' + str(element - 1) + ' not play')
                 # Điểm bonus:
@@ -85,123 +91,142 @@ def get_current_point(uid):
                     finished = match['finished']
                     if (match['id'] == fixture):
                         match_stats = match['stats']
-                        if finished:
-                            bp_name = 'bps'
-                        else:
-                            bp_name = 'bps'
-                        for match_stat in match_stats:
-                            if (match_stat['identifier'] == bp_name):
-                                a = match_stat['a']
-                                a0 = a[0]['value']
-                                a1 = a[1]['value']
-                                a2 = a[2]['value']
+                        print(match_stats)
+                        if finished == False:
+                            kickoff_time = match['kickoff_time']
+                            print(kickoff_time)
+                            kickoff_datetime = datetime.strptime(kickoff_time, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.utc)
+                            current_datetime = datetime.now(pytz.utc)
+                            if current_datetime > kickoff_datetime:
+                                print('match' + str(match))
+                                for match_stat in match_stats:
+                                    if (match_stat['identifier'] == 'bps'):
+                                        a = match_stat['a']
+                                        a0 = a[0]['value']
+                                        a1 = a[1]['value']
+                                        a2 = a[2]['value']
 
-                                p_bps = 0
-                                for p in a:
-                                    if (p['element'] == element):
-                                        p_bps = p['value']
-                                        break
-                                    
-                                if (p_bps == a0):
-                                    currentPoint += 3
-                                elif (p_bps == a1):
-                                    currentPoint += 2
-                                elif (p_bps == a2):
-                                    currentPoint += 1       
+                                        p_bps = 0
+                                        for p in a:
+                                            if (p['element'] == element):
+                                                p_bps = p['value']
+                                                break
+                                            
+                                        if (p_bps == a0):
+                                            player_point += 3
+                                        elif (p_bps == a1):
+                                            player_point += 2
+                                        elif (p_bps == a2):
+                                            player_point += 1       
 
-            if is_captain:
-                currentPoint = currentPoint * 2
+            if is_captain == False:
+                currentPoint += player_point
+            else:
+                currentPoint += player_point * 2
+        
 
-    # print(currentPoint)
+
+    print(currentPoint)
     return currentPoint
 
-get_current_point(2114046)
+#get_current_point(486618)
+#get_current_point(2114046)
 
 
-response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
-list_team = response.json()['league']
-print(list_team)
+def job():
+    print('============START==============')
+    response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
+    list_team = response.json()['league']
+    print(list_team)
 
-gw_result={}
-headers = {'x-requested-with':'https://fantasy.premierleague.com', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'}
-for uid in list_team:
-    url = 'https://fantasy.premierleague.com/api/entry/' + uid + '/event/' + str(current_gw) + '/picks/'
-    print('-------------' + uid + '----------------')
-    print(url)
-    current_point = get_current_point(uid)
-    response = requests.get(url)
-    d = response.json()
-    d['entry_history']['points'] += current_point
-    d['entry_history']['total_points'] += current_point
-    gw_result[uid] = d
-    print('-------------' + uid + '----------------')
-print(json.dumps(gw_result))
+    gw_result={}
+    headers = {'x-requested-with':'https://fantasy.premierleague.com', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'}
+    for uid in list_team:
+        url = 'https://fantasy.premierleague.com/api/entry/' + uid + '/event/' + str(current_gw) + '/picks/'
+        print('-------------' + uid + '----------------')
+        print(url)
+        current_point = get_current_point(uid)
+        response = requests.get(url)
+        d = response.json()
+        d['entry_history']['points'] = current_point
+        # d['entry_history']['total_points'] += current_point
+        gw_result[uid] = d
+        print('-------------' + uid + '----------------')
+    print(json.dumps(gw_result))
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(current_gw) + '.json'
-file = codecs.open(fileName, 'w', 'utf8')
-file.write(json.dumps(gw_result))
-file.close()
+    fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(current_gw) + '.json'
+    file = codecs.open(fileName, 'w', 'utf8')
+    file.write(json.dumps(gw_result))
+    file.close()
 
-repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-repo = Repo(repo_dir)
-file_list = [
-    fileName
-]
-commit_message = 'Update live result - ' + str(time.time())
-repo.index.add(file_list)
-repo.index.commit(commit_message)
-origin = repo.remote('origin')
-origin.push()
+    repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+    repo = Repo(repo_dir)
+    file_list = [
+        fileName
+    ]
+    commit_message = 'Update live result - ' + str(time.time())
+    repo.index.add(file_list)
+    repo.index.commit(commit_message)
+    origin = repo.remote('origin')
+    origin.push()
 
 
 
-response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period1_1.json")
-list_team_gr = response.json()
-print(list_team_gr)
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period1_1.json")
+    list_team_gr = response.json()
+    print(list_team_gr)
 
-def get_rank():
-    rank = {}
-    for i in range(1,9):
-        group = list_team_gr[str(i)]
-        print(group)
-        team = {}
-        group_rank = {}
-        for teamId in group:
-            print(teamId)
-            team['id'] = teamId
-            gw_point = gw_result[str(teamId)]['entry_history']['points'] - gw_result[str(teamId)]['entry_history']['event_transfers_cost']
-            team['gw_point'] = gw_point
-            total_point = gw_result[str(teamId)]['entry_history']['total_points']
-            team['point'] = total_point
-            team_cost = gw_result[str(teamId)]['entry_history']['bank'] + gw_result[str(teamId)]['entry_history']['value']
-            team['gd'] = team_cost
-            group_rank[teamId] = team
+    def get_rank():
+        rank = {}
+        for i in range(1,9):
+            group = list_team_gr[str(i)]
+            print(group)
             team = {}
-        
-        print(group_rank)
-        rank[str(i)] = group_rank
+            group_rank = {}
+            for teamId in group:
+                print(teamId)
+                team['id'] = teamId
+                gw_point = gw_result[str(teamId)]['entry_history']['points'] - gw_result[str(teamId)]['entry_history']['event_transfers_cost']
+                team['gw_point'] = gw_point
+                total_point = gw_result[str(teamId)]['entry_history']['total_points']
+                team['point'] = total_point
+                team_cost = gw_result[str(teamId)]['entry_history']['value']
+                team['gd'] = team_cost
+                group_rank[teamId] = team
+                team = {}
 
-    return rank
+            print(group_rank)
+            rank[str(i)] = group_rank
 
-    
-live_rank = get_rank()
-# print(live_rank)
-    
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
-file1 = codecs.open(fileName, 'w', 'utf8')
-file1.write(json.dumps(live_rank))
-file1.close()
+        return rank
 
 
-from git import Repo
+    live_rank = get_rank()
+    # print(live_rank)
 
-repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-repo = Repo(repo_dir)
-file_list = [
-    fileName
-]
-commit_message = 'Update rank - ' + str(time.time())
-repo.index.add(file_list)
-repo.index.commit(commit_message)
-origin = repo.remote('origin')
-origin.push()
+    fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
+    file1 = codecs.open(fileName, 'w', 'utf8')
+    file1.write(json.dumps(live_rank))
+    file1.close()
+
+    repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+    repo = Repo(repo_dir)
+    file_list = [
+        fileName
+    ]
+    commit_message = 'Update rank - ' + str(time.time())
+    repo.index.add(file_list)
+    repo.index.commit(commit_message)
+    origin = repo.remote('origin')
+    origin.push()
+    print('============DONE==============')
+
+job()
+
+# Lên lịch công việc chạy vào mỗi phút
+schedule.every(2).minutes.do(job)
+
+
+while True:
+    schedule.run_pending()
+    time.sleep(2)
