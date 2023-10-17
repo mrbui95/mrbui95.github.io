@@ -212,6 +212,9 @@ const createGroupResult = (groupType, groupInfo, gw) => {
         table.classList.add('table-sm')
         const tbody = document.createElement('tbody')
 
+
+        const gwInfo = cgw < gw ? cgw : gw
+
         groupInfo.listMatchResult.forEach((match) => {
 
             const tr = document.createElement('tr')
@@ -226,9 +229,6 @@ const createGroupResult = (groupType, groupInfo, gw) => {
             } else if (match.point1 < match.point2) {
                 td4.classList.add('winner_cell')
             }
-
-            const gwInfo = cgw < gw ? cgw : gw
-            console.log('------------------', cgw, gw, gwInfo)
 
             const link1 = "https://fantasy.premierleague.com/entry/" + match.team1 + "/event/" + gwInfo
             const aName1 = document.createElement('a')
@@ -290,6 +290,14 @@ const createGroupResult = (groupType, groupInfo, gw) => {
         tdHead2_6.appendChild(document.createTextNode('HS'))
         tdHead2_7.appendChild(document.createTextNode('Đ'))
 
+        tdHead2_1.classList.add('font_weight_bold')
+        tdHead2_2.classList.add('font_weight_bold')
+        tdHead2_3.classList.add('font_weight_bold')
+        tdHead2_4.classList.add('font_weight_bold')
+        tdHead2_5.classList.add('font_weight_bold')
+        tdHead2_6.classList.add('font_weight_bold')
+        tdHead2_7.classList.add('font_weight_bold')
+
         trHead2.appendChild(tdHead2_1)
         trHead2.appendChild(tdHead2_2)
         trHead2.appendChild(tdHead2_3)
@@ -313,13 +321,21 @@ const createGroupResult = (groupType, groupInfo, gw) => {
             const td2_6 = document.createElement('td')
             const td2_7 = document.createElement('td')
 
+            const link = "https://fantasy.premierleague.com/entry/" + rank.id + "/event/" + gwInfo
+            const aName = document.createElement('a')
+            aName.appendChild(document.createTextNode(rank.name))
+            aName.setAttribute('href', link)
+            aName.setAttribute('target', '_blank')
+
             td2_1.appendChild(document.createTextNode(index))
-            td2_2.appendChild(document.createTextNode(rank.name))
+            td2_2.appendChild(aName)
+            td2_2.classList.add('font_weight_bold')
             td2_3.appendChild(document.createTextNode(rank.win))
             td2_4.appendChild(document.createTextNode(rank.draw))
             td2_5.appendChild(document.createTextNode(rank.lose))
             td2_6.appendChild(document.createTextNode(rank.gd))
             td2_7.appendChild(document.createTextNode(rank.point))
+            td2_7.classList.add('font_weight_bold')
 
             tr2.appendChild(td2_1)
             tr2.appendChild(td2_2)
@@ -328,6 +344,7 @@ const createGroupResult = (groupType, groupInfo, gw) => {
             tr2.appendChild(td2_5)
             tr2.appendChild(td2_6)
             tr2.appendChild(td2_7)
+            
 
             if (index <= 8) {
                 tr2.classList.add('winner_cell')
