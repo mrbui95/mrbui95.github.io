@@ -101,7 +101,7 @@ data['4'] = fixture
 
 # print(data)
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\group_period1_' + str(stage) + '.json'
+fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\group_period2_' + str(stage) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(data))
 

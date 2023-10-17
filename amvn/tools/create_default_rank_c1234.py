@@ -7,7 +7,7 @@ from git import Repo
 
 stage = 1
 
-response = requests.get('https://mrbui95.github.io/amvn/data/c1/group_period' + str(stage) + '_1.json')
+response = requests.get('https://mrbui95.github.io/amvn/data/c1/group_period1_' + str(stage) + '.json')
 list_team = response.json()
 
 rank = {

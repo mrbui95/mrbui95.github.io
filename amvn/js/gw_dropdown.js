@@ -1,6 +1,7 @@
 const gameWeekSelect = document.querySelector('#gw_select')
 
 
+let cgw = 1
 let currentGw = 1
 let uInfo
 let gwData
@@ -26,6 +27,7 @@ const getCurrentGW = async () => {
             gameWeekSelectOption.removeAttribute('selected')
         }
 
+        cgw = json.current_gw
         currentGw = json.current_gw
         console.log(json, currentGw)
         id = 'dropdown_gw_option_' + currentGw;
@@ -225,10 +227,27 @@ const createGroupResult = (groupType, groupInfo, gw) => {
                 td4.classList.add('winner_cell')
             }
 
-            td1.appendChild(document.createTextNode(match.name1))
+            const gwInfo = cgw < gw ? cgw : gw
+            console.log('------------------', cgw, gw, gwInfo)
+
+            const link1 = "https://fantasy.premierleague.com/entry/" + match.team1 + "/event/" + gwInfo
+            const aName1 = document.createElement('a')
+            aName1.appendChild(document.createTextNode(match.name1))
+            aName1.setAttribute('href', link1)
+            aName1.setAttribute('target', '_blank')
+
+            const link2 = "https://fantasy.premierleague.com/entry/" + match.team2 + "/event/" + gwInfo
+            const aName2 = document.createElement('a')
+            aName2.appendChild(document.createTextNode(match.name2))
+            aName2.setAttribute('href', link2)
+            aName2.setAttribute('target', '_blank')
+
+            td1.appendChild(aName1)
+            td1.classList.add('font_weight_bold')
             td2.appendChild(document.createTextNode(match.point1))
             td3.appendChild(document.createTextNode(match.point2))
-            td4.appendChild(document.createTextNode(match.name2))
+            td4.appendChild(aName2)
+            td4.classList.add('font_weight_bold')
 
             tr.appendChild(td1)
             tr.appendChild(td2)
