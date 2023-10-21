@@ -2,6 +2,8 @@ import requests
 import codecs
 import json
 import time
+from git import Repo
+
 
 response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
 
@@ -59,7 +61,7 @@ file1.write(json.dumps(data))
 file1.close()
 
 
-from git import Repo
+
 repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
 repo = Repo(repo_dir)
 file_list = [
