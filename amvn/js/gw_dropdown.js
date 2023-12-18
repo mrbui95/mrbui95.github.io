@@ -383,7 +383,6 @@ const createFinalResult = (gw, data) => {
 
         // Tên Bảng
         const groupNameEle = document.createElement('div')
-        groupNameEle.setAttribute('id', `group_${groupInfo.index}`)
         groupNameEle.innerHTML = groupName
         groupNameEle.style.fontWeight = 800
         groupNameEle.style.padding = '10px 0'
