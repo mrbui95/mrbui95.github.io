@@ -446,7 +446,8 @@ const createFinalResult = (gw, data) => {
             aName1.appendChild(document.createTextNode(name1))
             aName1.setAttribute('href', link1)
             aName1.setAttribute('target', '_blank')
-            td1.appendChild(document.createTextNode(aName1))
+            td1.appendChild(aName1)
+            td1.classList.add('font_weight_bold')
             td2.appendChild(document.createTextNode(point1))
 
             const link2 = "https://fantasy.premierleague.com/entry/" + team2 + "/event/" + gw
@@ -455,7 +456,8 @@ const createFinalResult = (gw, data) => {
             aName2.setAttribute('href', link2)
             aName2.setAttribute('target', '_blank')
             td3.appendChild(document.createTextNode(point2))
-            td4.appendChild(document.createTextNode(aName2))
+            td4.appendChild(aName2)
+            td4.classList.add('font_weight_bold')
 
             tr.appendChild(td1)
             tr.appendChild(td2)
