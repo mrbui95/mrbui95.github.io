@@ -441,7 +441,7 @@ const createFinalResult = (gw, data) => {
             }
 
 
-            const link1 = "https://fantasy.premierleague.com/entry/" + team1 + "/event/" + gwInfo
+            const link1 = "https://fantasy.premierleague.com/entry/" + team1 + "/event/" + gw
             const aName1 = document.createElement('a')
             aName1.appendChild(document.createTextNode(name1))
             aName1.setAttribute('href', link1)
@@ -449,7 +449,7 @@ const createFinalResult = (gw, data) => {
             td1.appendChild(document.createTextNode(aName1))
             td2.appendChild(document.createTextNode(point1))
 
-            const link2 = "https://fantasy.premierleague.com/entry/" + team2 + "/event/" + gwInfo
+            const link2 = "https://fantasy.premierleague.com/entry/" + team2 + "/event/" + gw
             const aName2 = document.createElement('a')
             aName2.appendChild(document.createTextNode(name2))
             aName2.setAttribute('href', link2)
