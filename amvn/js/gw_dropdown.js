@@ -440,10 +440,22 @@ const createFinalResult = (gw, data) => {
                 td4.classList.add('winner_cell')
             }
 
-            td1.appendChild(document.createTextNode(name1))
+
+            const link1 = "https://fantasy.premierleague.com/entry/" + team1 + "/event/" + gwInfo
+            const aName1 = document.createElement('a')
+            aName1.appendChild(document.createTextNode(name1))
+            aName1.setAttribute('href', link1)
+            aName1.setAttribute('target', '_blank')
+            td1.appendChild(document.createTextNode(aName1))
             td2.appendChild(document.createTextNode(point1))
+
+            const link2 = "https://fantasy.premierleague.com/entry/" + team2 + "/event/" + gwInfo
+            const aName2 = document.createElement('a')
+            aName2.appendChild(document.createTextNode(name2))
+            aName2.setAttribute('href', link2)
+            aName2.setAttribute('target', '_blank')
             td3.appendChild(document.createTextNode(point2))
-            td4.appendChild(document.createTextNode(name2))
+            td4.appendChild(document.createTextNode(aName2))
 
             tr.appendChild(td1)
             tr.appendChild(td2)
