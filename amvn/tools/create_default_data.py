@@ -8,17 +8,17 @@ stage = 2
 
 rank = {}
 
-current_gw = 20
+current_gw = 21
 
 if (current_gw == 20):
     response = requests.get('https://mrbui95.github.io/amvn/data/c1/group_period1_' + str(stage) + '.json')
 
     list_team = response.json()
 
-    start = (stage - 1) * 19 + 1
-    end = (stage - 1) * 19 + 9
+    # start = (stage - 1) * 19 + 1
+    # end = (stage - 1) * 19 + 9
 
-    for i in range(start, end):
+    for i in range(1, 9):
         group = list_team[str(i)]
         print(group)
         team = {}

@@ -608,7 +608,7 @@ const getUserData = async () => {
             for (let i = 1; i <= maxGroup; i++) {
                 const groupName = getGroupName(i, groupType)
 
-                if (currentGw <= 8) {
+                if (currentGw <= 8 || (currentGw >= 20 && currentGw < 28)) {
                     groupInfo = {
                         index: i,
                         groupName,
@@ -616,7 +616,7 @@ const getUserData = async () => {
                     }
 
                     result = createGroupResult(groupType, groupInfo, currentGw)
-                } else if (gw < 17) {
+                } else if (currentGw < 17 || (currentGw >= 28 && currentGw < 36)) {
                     const fixture = groupData[i][fixtureIndex]
                     console.log(fixture)
 
