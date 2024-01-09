@@ -5,7 +5,7 @@ import time
 import json
 from git import Repo
 
-stage = 1
+stage = 2
 
 response = requests.get('https://mrbui95.github.io/amvn/data/c1/group_period1_' + str(stage) + '.json')
 list_team = response.json()

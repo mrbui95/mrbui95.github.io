@@ -492,24 +492,35 @@ const getUserData = async () => {
         return data.json()
     }).then(data => uInfo = data)
 
-    let gw = currentGw % 19
-    if (gw === 0) {
-        gw = currentGw
-    }
+    // let gw = currentGw % 19
+    // if (gw === 0) {
+    //     gw = currentGw
+    // }
     let urlGroupFixture = ''
     let maxGroup = -1
     let groupType = ''
     let fixtureIndex = 1
-    if (gw <= 8) {
-        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_1.json'
+    if (currentGw <= 8 || (currentGw >= 20 && currentGw < 28)) {
+        let period = 1
+        if (currentGw >= 20 && currentGw < 28) {
+            period = 2
+        }
+            
+
+        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period1_' + period + '.json'
         maxGroup = 8
         groupType = 'PHAN_HANG'
-        fixtureIndex = gw - 1
-    } else if (gw < 17) {
-        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period2_1.json'
+        fixtureIndex = currentGw - 1
+    } else if (currentGw < 17  || (currentGw >= 28 && currentGw < 36)) {
+        let period = 1
+        if (currentGw >= 28 && currentGw < 36) {
+            period = 2
+        }
+
+        urlGroupFixture = 'https://mrbui95.github.io/amvn/data/c1/group_period2_' + period + '.json'
         maxGroup = 4
         groupType = 'C_1234'
-        fixtureIndex = gw - 8
+        fixtureIndex = currentGw - 8
     }
 
     // Xóa dữ liệu cũ
@@ -538,7 +549,7 @@ const getUserData = async () => {
 
 
 
-    await fetch("https://mrbui95.github.io/amvn/data/c1/result/" + gw + ".json", {
+    await fetch("https://mrbui95.github.io/amvn/data/c1/result/" + currentGw + ".json", {
         method: "GET",
         headers: {
             "Content-type": "application/json;charset=UTF-8",
@@ -549,8 +560,8 @@ const getUserData = async () => {
     }).then(data => gwData = data)
 
 
-    if (gw < 17 || (gw > 19 && gw < 36)) {
-        await fetch("https://mrbui95.github.io/amvn/data/c1/rank/" + gw + ".json", {
+    if (currentGw < 17 || (currentGw > 19 && currentGw < 36)) {
+        await fetch("https://mrbui95.github.io/amvn/data/c1/rank/" + currentGw + ".json", {
             method: "GET",
             headers: {
                 "Content-type": "application/json;charset=UTF-8",
@@ -597,14 +608,14 @@ const getUserData = async () => {
             for (let i = 1; i <= maxGroup; i++) {
                 const groupName = getGroupName(i, groupType)
 
-                if (gw <= 8) {
+                if (currentGw <= 8) {
                     groupInfo = {
                         index: i,
                         groupName,
                         rank: gwRank[i]
                     }
 
-                    result = createGroupResult(groupType, groupInfo, gw)
+                    result = createGroupResult(groupType, groupInfo, currentGw)
                 } else if (gw < 17) {
                     const fixture = groupData[i][fixtureIndex]
                     console.log(fixture)
@@ -646,7 +657,7 @@ const getUserData = async () => {
                         rank: gwRank[i]
                     }
 
-                    result = createGroupResult(groupType, groupInfo, gw)
+                    result = createGroupResult(groupType, groupInfo, currentGw)
 
                     console.log('-----------', groupName, '----------')
                 }
@@ -654,7 +665,7 @@ const getUserData = async () => {
         })
 
     } else {
-        await fetch("https://mrbui95.github.io/amvn/data/c1/final_" + gw + ".json", {
+        await fetch("https://mrbui95.github.io/amvn/data/c1/final_" + currentGw + ".json", {
             method: "GET",
             headers: {
                 "Content-type": "application/json;charset=UTF-8",
@@ -665,7 +676,7 @@ const getUserData = async () => {
         }).then((data) => {
             console.log(data)
 
-            createFinalResult(gw, data)
+            createFinalResult(currentGw, data)
         })
     }
 

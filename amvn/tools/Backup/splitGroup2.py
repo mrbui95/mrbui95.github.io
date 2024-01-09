@@ -8,7 +8,7 @@ response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
 
 listTeam = response.json()['league']
 
-stage = 1
+stage = 2
 
 # Chia bảng
 random.shuffle(listTeam)
@@ -34,6 +34,7 @@ print(data)
 fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\group_period1_' + str(stage) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(data))
+file1.close()
 
 
 
