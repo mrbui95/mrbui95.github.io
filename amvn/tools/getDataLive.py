@@ -133,6 +133,14 @@ def get_current_point(uid):
 #get_current_point(2114046)
 
 
+def get_gw19_point(uid):
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/result/19.json")
+    udata = response.json()
+    print('===============GW19 result')
+    print(udata)
+    print('===============GW19 result')
+    return 0
+
 def job():
     print('============START==============')
     response = requests.get('https://mrbui95.github.io/amvn/data/user_c1.json')
@@ -172,9 +180,9 @@ def job():
 
 
 
-    response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period1_1.json")
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period2_2.json")
     list_team_gr = response.json()
-    print(list_team_gr)
+    # print(list_team_gr)
 
     def get_rank():
         rank = {}
@@ -186,9 +194,12 @@ def job():
             for teamId in group:
                 print(teamId)
                 team['id'] = teamId
+                print('---------------------------' + str(teamId))
                 gw_point = gw_result[str(teamId)]['entry_history']['points'] - gw_result[str(teamId)]['entry_history']['event_transfers_cost']
                 team['gw_point'] = gw_point
                 total_point = gw_result[str(teamId)]['entry_history']['total_points']
+                if (current_gw > 19):
+                    total_point = total_point - get_gw19_point()
                 team['point'] = total_point
                 team_cost = gw_result[str(teamId)]['entry_history']['value']
                 team['gd'] = team_cost
