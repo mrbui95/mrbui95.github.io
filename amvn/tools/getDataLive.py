@@ -133,13 +133,10 @@ def get_current_point(uid):
 #get_current_point(2114046)
 
 
-def get_gw19_point(uid):
-    response = requests.get("https://mrbui95.github.io/amvn/data/c1/result/19.json")
-    udata = response.json()
+def get_gw19_point(gw19data, uid):
+    
     print('===============GW19 result')
-    print(udata)
-    print('===============GW19 result')
-    return 0
+    return udata[str(uid)]["point"]
 
 def job():
     print('============START==============')
@@ -185,6 +182,11 @@ def job():
     # print(list_team_gr)
 
     def get_rank():
+        gw19_data = {}
+        if (current_gw > 19):
+            response = requests.get("https://mrbui95.github.io/amvn/data/c1/result/19.json")
+            gw19_data = response.json()
+
         rank = {}
         for i in range(1,9):
             group = list_team_gr[str(i)]
@@ -199,7 +201,7 @@ def job():
                 team['gw_point'] = gw_point
                 total_point = gw_result[str(teamId)]['entry_history']['total_points']
                 if (current_gw > 19):
-                    total_point = total_point - get_gw19_point()
+                    total_point = total_point - get_gw19_point(gw19_data, teamId)
                 team['point'] = total_point
                 team_cost = gw_result[str(teamId)]['entry_history']['value']
                 team['gd'] = team_cost
