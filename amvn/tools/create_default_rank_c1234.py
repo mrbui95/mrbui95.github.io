@@ -7,7 +7,7 @@ from git import Repo
 
 stage = 2
 
-response = requests.get('https://mrbui95.github.io/amvn/data/c1/group_period1_' + str(stage) + '.json')
+response = requests.get('https://mrbui95.github.io/amvn/data/c1/group_period2_' + str(stage) + '.json')
 list_team = response.json()
 
 rank = {
@@ -48,7 +48,7 @@ print(gw_data)
 
 file_list = []
         
-for i in range (9,17):
+for i in range (28,36):
     fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(i) + '.json'
     file_list.append(fileName)
     file = codecs.open(fileName, 'w', 'utf8')

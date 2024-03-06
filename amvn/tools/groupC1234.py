@@ -5,7 +5,7 @@ import time
 import json
 from git import Repo
 
-stage = 1
+stage = 2
 
 current_gw = -1
 if stage == 1:
@@ -104,6 +104,7 @@ data['4'] = fixture
 fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\group_period2_' + str(stage) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(data))
+file1.close()
 
 from git import Repo
 
