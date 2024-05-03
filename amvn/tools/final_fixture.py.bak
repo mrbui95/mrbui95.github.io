@@ -137,16 +137,16 @@ elif  (curr_gw == 19 or curr_gw == 38):
     
 print(data)
 
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\final_' + str(curr_gw) + '.json'
-#fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\c1\\final_' + str(curr_gw) + '.json'
+#fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\final_' + str(curr_gw) + '.json'
+fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\c1\\final_' + str(curr_gw) + '.json'
 file1 = codecs.open(fileName, 'w', 'utf8')
 file1.write(json.dumps(data))
 file1.close()
 
 from git import Repo
 
-repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-#repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
+#repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
 repo = Repo(repo_dir)
 file_list = [
     fileName
