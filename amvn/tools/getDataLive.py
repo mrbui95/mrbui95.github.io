@@ -29,7 +29,7 @@ if (current_gw != curr_gw_sv ):
     time.sleep(10)
     print('upload git')
     #repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-    repo_dir = 'D:\\thanhbh3\\Github\\mrbui95.github.io'
+    repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
     repo = Repo(repo_dir)
     file_list = [
         fileName
@@ -181,7 +181,7 @@ def job():
 
 
 
-    response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period2_2.json")
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period1_2.json")
     list_team_gr = response.json()
     # print(list_team_gr)
 
@@ -243,9 +243,9 @@ def job():
 job()
 
 # Lên lịch công việc chạy vào mỗi phút
-schedule.every(2).minutes.do(job)
+schedule.every(60).minutes.do(job)
 
 
 while True:
     schedule.run_pending()
-    time.sleep(2)
+    time.sleep(60)
