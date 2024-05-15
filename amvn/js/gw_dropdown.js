@@ -521,6 +521,9 @@ const getUserData = async () => {
         maxGroup = 4
         groupType = 'C_1234'
         fixtureIndex = currentGw - 8
+        if (currentGw >= 28) {
+            fixtureIndex = fixtureIndex - 19
+        }
     }
 
     // Xóa dữ liệu cũ

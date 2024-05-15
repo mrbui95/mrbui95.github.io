@@ -40,8 +40,6 @@ if (current_gw != curr_gw_sv ):
     origin = repo.remote('origin')
     origin.push()
 
-
-
 def get_current_point(uid):
 
 
@@ -139,6 +137,10 @@ def get_gw19_point(gw19data, uid):
     print('===============GW19 result:' + json.dumps(gw19data[str(uid)]["entry_history"]))
     return gw19data[str(uid)]["entry_history"]["total_points"]
 
+def get_pregw_point(pregwdata, uid):
+    print('===============GW19 result:' + json.dumps(pregwdata[str(uid)]["entry_history"]))
+    return pregwdata[str(uid)]["entry_history"]["total_points"]
+
 
 def job():
     print('============START==============')
@@ -191,6 +193,9 @@ def job():
             response = requests.get("https://mrbui95.github.io/amvn/data/c1/result/19.json")
             gw19_data = response.json()
 
+        response = requests.get("https://mrbui95.github.io/amvn/data/c1/result/" + str(current_gw - 1) + ".json")
+        pregw_data = response.json()
+
         rank = {}
         for i in range(1,9):
             group = list_team_gr[str(i)]
@@ -202,8 +207,10 @@ def job():
                 team['id'] = teamId
                 print('---------------------------' + str(teamId))
                 gw_point = gw_result[str(teamId)]['entry_history']['points'] - gw_result[str(teamId)]['entry_history']['event_transfers_cost']
-                team['gw_point'] = gw_point
                 total_point = gw_result[str(teamId)]['entry_history']['total_points']
+                if (gw_result[str(teamId)]['active_chip'] is not None):
+                    gw_point = total_point - get_pregw_point(pregw_data, teamId)
+                team['gw_point'] = gw_point
                 if (current_gw > 19):
                     total_point = total_point - get_gw19_point(gw19_data, teamId)
                 team['point'] = total_point

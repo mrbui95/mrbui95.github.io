@@ -25,7 +25,7 @@ for team in list_team.keys():
 
 file_list = []
 
-for i in range (36,39):
+for i in range (17,20):
   fileName2 = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(i) + '.json'
   file_list.append(fileName2)
   file1 = codecs.open(fileName2, 'w', 'utf8')
