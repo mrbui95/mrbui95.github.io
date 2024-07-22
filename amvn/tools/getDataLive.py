@@ -16,8 +16,8 @@ data_curr_gw = response_curr_gw.json()
 current_gw = data_curr_gw['current_event']
 data = {}
 data['current_gw'] = current_gw
-fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\current_gw.json'
-# fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\current_gw.json'
+#fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\current_gw.json'
+fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\current_gw.json'
 file = codecs.open(fileName, 'w', 'utf8')
 file.write(json.dumps(data))
 file.close()
@@ -28,8 +28,8 @@ print (current_gw, curr_gw_sv)
 if (current_gw != curr_gw_sv ):
     time.sleep(10)
     print('upload git')
-    repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-    # repo_dir = 'D:\\thanhbh3\\Github\\mrbui95.github.io'
+    #repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+    repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
     repo = Repo(repo_dir)
     file_list = [
         fileName
@@ -163,14 +163,14 @@ def job():
         print('-------------' + uid + '----------------')
     print(json.dumps(gw_result))
 
-    fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(current_gw) + '.json'
-    # fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(current_gw) + '.json'
+    #fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(current_gw) + '.json'
+    fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\c1\\result\\' + str(current_gw) + '.json'
     file = codecs.open(fileName, 'w', 'utf8')
     file.write(json.dumps(gw_result))
     file.close()
 
-    repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-    # repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
+    #repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+    repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
     repo = Repo(repo_dir)
     file_list = [
         fileName
@@ -183,7 +183,7 @@ def job():
 
 
 
-    response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period2_2.json")
+    response = requests.get("https://mrbui95.github.io/amvn/data/c1/group_period1_2.json")
     list_team_gr = response.json()
     # print(list_team_gr)
 
@@ -228,14 +228,14 @@ def job():
     live_rank = get_rank()
     # print(live_rank)
 
-    fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
-    # fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
+    #fileName = 'F:\\Study\\Github\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
+    fileName = 'D:\\thanhbh3\\mrbui95.github.io\\amvn\\data\\c1\\rank\\' + str(current_gw) + '.json'
     file1 = codecs.open(fileName, 'w', 'utf8')
     file1.write(json.dumps(live_rank))
     file1.close()
 
-    repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-    # repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
+    #repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+    repo_dir = 'D:\\thanhbh3\\mrbui95.github.io'
     repo = Repo(repo_dir)
     file_list = [
         fileName
@@ -250,9 +250,9 @@ def job():
 job()
 
 # Lên lịch công việc chạy vào mỗi phút
-schedule.every(2).minutes.do(job)
+schedule.every(60).minutes.do(job)
 
 
 while True:
     schedule.run_pending()
-    time.sleep(2)
+    time.sleep(60)
