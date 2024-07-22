@@ -5,7 +5,7 @@ import time
 import json
 from git import Repo
 
-curr_gw = 36
+curr_gw = 37
 
 prev_gw = curr_gw - 1
 
