@@ -9,12 +9,30 @@ repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
 
 
 file_prefix = repo_dir + '\\amvn2425\\data'
-file_curr_gw = 'current_gw.json'
 
+# Ham luu tru file local
+def saveFile(file_name, content):
+    file = codecs.open(file_name, 'w', 'utf8')
+    file.write(content)
+    file.close()
 
+# Ham luu file len git
 def updateGit(file_name, commit):
+    time.sleep(10)
     print('upload git: ' + commit)
+    repo = Repo(repo_dir)
+    file_list = [
+        fileName
+    ]
+    commit_message = commit + ' - ' + str(time.time())
+    repo.index.add(file_list)
+    repo.index.commit(commit_message)
+    origin = repo.remote('origin')
+    origin.push()
     
+def saveFileAndUpdateGit(file_name, content, commit):
+    saveFile(file_name, content)
+    updateGit(fileName, commit)
 
 # Hàm lay thong tin gameweek hien tai
 def getCurrGw():
@@ -24,22 +42,77 @@ def getCurrGw():
     current_gw = data_curr_gw['current_event']
     if current_gw is None:
         current_gw = 1
+    
+    data = {}
+    data['current_gw'] = current_gw
+    
+    file_name = file_prefix + '\\current_gw.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Update Current GW')
+    
     return current_gw
 
 
 
+# Ham lay danh sach id nguoi choi C1
+def getListPlayerUid():
+    url_user_c1 = 'https://mrbui95.github.io/amvn2425/data/user_c1.json'
+    response = requests.get(url_user_c1)
+    print(response.json())
+    listPlayerUid = response.json()['league']
+    return listPlayerUid
+
+
+# Ham lay ket qua vong choi
+def getDataGw(gw):
+    data={}
+    headers = {'x-requested-with':'https://fantasy.premierleague.com', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'}
+    listPlayerUid = getListPlayerUid()
+    for uid in listPlayerUid:
+        url = 'https://fantasy.premierleague.com/api/entry/' + uid + '/event/' + str(current_gw) + '/picks/'
+        print('-------------' + uid + '----------------')
+        print(url)
+        response = requests.get(url)
+        data[uid] = response.json()
+        print('-------------' + uid + '----------------')
+    print(json.dumps(data))
+    
+    file_name = file_prefix + '\\c1\\result' + str(gw) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Get GW User Data')
+
+# Ham sinh Fixture tự động
+def RandomFixture():
+    print('Random Fixture')
+
+# Ham tinh toan danh sach nguoi choi vao 4 nhom C1, C2, C3, C4
+def SplitGroup():
+    print('Split group')
+
+
+def 
+
+
+#current_gw = getCurrGw()
+#print(current_gw)
+
+#Fix cung current_gw de test
+current_gw = 1
+
+
+getDataGw(current_gw)
+
+if (current_gw < 4):
+    # Vong phan hang - chi lay ket qua classic => khong lam gi
+    print('Vong phan hang - chi lay ket qua classic => khong lam gi')
+elif (current_gw == 4):
+    # Ket thuc vong phan hang - lay ket quả classic va chia danh sach thanh vien vao 4 nhóm C1,C2,C3,C4
+    SplitGroup()
+    RandomFixture()
+elif (current_gw < )
     
 
 
-# Ham lay danh sach id nguoi choi C1
-def getListPlayerC1():
-    url_user_c1 = 'https://mrbui95.github.io/amvn/data/user_c1.json'
-    response = requests.get(url_user_c1)
-    print(response.json())
-    return response[]
 
 
 
-
-current_gw = getCurrGw()
-print(current_gw)
