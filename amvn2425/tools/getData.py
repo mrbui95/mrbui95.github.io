@@ -2,6 +2,7 @@ import requests
 import codecs
 import json
 import time
+import random
 from git import Repo
 
 repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
@@ -85,12 +86,89 @@ def getDataGw(gw):
 def getDataResult(gw):
     url_data_result = 'https://mrbui95.github.io/amvn2425/data/c1/result/' + str(gw) + '.json'
     response = requests.get(url_data_result)
-    print(response.json())
+    # print(response.json())
     gw_data = response.json()
     return gw_data
 
+def getPlayerPoint(gw_data, uid):
+    player = gw_data[str(uid)]
+    point = player['entry_history']['points'] - player['entry_history']['event_transfers_cost']
+    total_points = player['entry_history']['total_points']
+    return point, total_points
+
+def getListGroupPlayer(stage):
+    url_group_player = 'https://mrbui95.github.io/amvn2425/data/c1/group/list_stage_' + str(stage) + '.json'
+    response = requests.get(url_group_player)
+    group_player = response.json()
+    return group_player
+
+def getStage(gw):
+    stage = 1
+    if (current_gw > 20):
+        stage = 2
+        
+    return stage
+
+def getFixture(gw):
+    stage = getStage(gw)
+
+    index = gw - 5
+    if (current_gw >= 24):
+        index = gw - 24
+
+    url_fixture = 'https://mrbui95.github.io/amvn2425/data/c1/group/fixture_' + str(stage) + '.json'
+    response = requests.get(url_fixture)
+    fixture = response.json()
+    data = {}
+    data['c1'] = fixture['c1'][index]
+    data['c2'] = fixture['c2'][index]
+    data['c3'] = fixture['c3'][index]
+    data['c4'] = fixture['c4'][index]
+    return data
+
+def saveGwRank(gw, data):
+    file_name = file_prefix + '\\c1\\group\\rank_' + str(gw) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Save GW User Data')
+
+
+def saveRankData(gw, rank):
+    file_name = file_prefix + '\\c1\\group\\rank_' + str(gw) + '.json'
+    content = json.dumps(rank)
+    saveFileAndUpdateGit(file_name, content, 'Update GW Rank ' + str(gw))
+
+def CreateDefaultRank(gw):
+    stage = getStage(gw)
+    group_player = getListGroupPlayer(stage)
+    data = {}
+    for group in group_player:
+        group_data = []
+        list_player = group_player[group]
+        for player in list_player:
+            player_info = {}
+            player_info['id'] = player
+            player_info['point'] = 0
+            player_info['total_points'] = 0
+            group_data.append(player_info)
+        data[group] = group_data
+
+    saveRankData(gw, data)
+
+    return data
+
+def getRank(gw):
+    url_rank = 'https://mrbui95.github.io/amvn2425/data/c1/group/rank_' + str(gw) + '.json'
+    response = requests.get(url_rank)
+    rank = response.json()
+    return rank
+
+
+
+
+
 # Ham sinh Fixture tự động
 def make_fixture(teams):
+    random.shuffle(teams)
     if len(teams) % 2:
         teams.append('Day off')
     n = len(teams)
@@ -146,14 +224,15 @@ def SplitGroup(current_gw):
     index = 0
     for key, value in sorted_data.items():
         print(key + ": " + str(value['entry_history']['total_points']))
+        key_number = int(key)
         if (index < GROUP_MAX_MEMBER):
-            group_c1.append(key)
+            group_c1.append(key_number)
         elif (index < (2 * GROUP_MAX_MEMBER)):
-            group_c2.append(key)
+            group_c2.append(key_number)
         elif (index < (3 * GROUP_MAX_MEMBER)):
-            group_c3.append(key)
+            group_c3.append(key_number)
         else:
-            group_c4.append(key)
+            group_c4.append(key_number)
 
         index += 1
 
@@ -174,49 +253,322 @@ def SplitGroup(current_gw):
 
     return stage, group_c1, group_c2, group_c3, group_c4
 
+def updateRankData(rank, group, uid1, point_add1, total_points1, uid2, point_add2, total_points2):
+    done1 = False
+    done2 = False
+    for item in rank[group]:
+        if item['id'] == uid1:
+            item['point'] = item['point'] + point_add1
+            item['total_points'] = total_points1
+            done1 = True
+        if item['id'] == uid2:
+            item['point'] = item['point'] + point_add2
+            item['total_points'] = total_points2
+            done2 = True
+        if done1 and done2:
+            break
 
 
 # Ham tinh toan ket qua thang thua vong bang, tinh toan bang xep hang tam thoi
-def CalcGroupResult():
+def CalcGroupResult(current_gw):
     print('CalcGroupResult')
+    gw_data = getDataResult(current_gw)
+    list_fixture = getFixture(current_gw)
+    rank = getRank(current_gw - 1)
+
+    for group in list_fixture:
+        group_fixture = list_fixture[group]
+        print(group_fixture)
+        for fixture in group_fixture:
+            print(fixture)
+            uid1 = fixture[0]
+            uid2 = fixture[1]
+            point1, total_points1 = getPlayerPoint(gw_data, uid1)
+            point2, total_points2 = getPlayerPoint(gw_data, uid2)
+
+            point_add1 = 0
+            point_add2 = 0
+
+            if point1 < point2:
+                point_add2 = 3
+            elif point1 > point2:
+                point_add1 = 3
+            else:
+                point_add1 = 1
+                point_add2 = 1
+
+            updateRankData(rank, group, uid1, point_add1, total_points1, uid2, point_add2, total_points2)
+    
+
+    saveRankData(current_gw, rank)
+    return rank
+
+
 
 # Ham tinh toan ket qua vong bang, xac dinh cac cap dau playoff
-def CalcKnockOutResult():
-    print('CalcKnockOutResult')
+def CalcPlayOffResult(current_gw, rank):
+    print('CalcPlayOffResult')
 
-# Ham tinh toan ket qua Playoff luot di
-def CalcPlayoffFirstLeg():
-    print("CalcPlayoffFirstLeg")
+    stage = getStage(current_gw)
+
+    for group in rank:
+        rank[group] = sorted(rank[group], key=lambda x: (x['point'], x['total_points']), reverse=True)
+
+    data = {}
+    # Playoff tu ket C2
+    c2 = [
+        [int(rank["c1"][8]["id"]), int(rank["c2"][7]["id"])],
+        [int(rank["c1"][9]["id"]), int(rank["c2"][6]["id"])],
+        [int(rank["c1"][10]["id"]), int(rank["c2"][5]["id"])],
+        [int(rank["c1"][11]["id"]), int(rank["c2"][4]["id"])]
+    ]
+    data['c2'] = c2
+    # Playoff tu ket C]
+    c3 = [
+        [int(rank["c2"][8]["id"]), int(rank["c3"][7]["id"])],
+        [int(rank["c2"][9]["id"]), int(rank["c3"][6]["id"])],
+        [int(rank["c2"][10]["id"]), int(rank["c3"][5]["id"])],
+        [int(rank["c2"][11]["id"]), int(rank["c3"][4]["id"])]
+    ]
+    data['c3'] = c3
+    # Playoff tu ket C4
+    c4 = [
+        [int(rank["c3"][8]["id"]), int(rank["c4"][7]["id"])],
+        [int(rank["c3"][9]["id"]), int(rank["c4"][6]["id"])],
+        [int(rank["c3"][10]["id"]), int(rank["c4"][5]["id"])],
+        [int(rank["c3"][11]["id"]), int(rank["c4"][4]["id"])]
+    ]
+    data['c4'] = c4
+
+
+
+
+    file_name = file_prefix + '\\c1\\knockout\\playoff_' + str(stage) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Update Fixture Play-off ' + str(stage))
+
+    
+
+
+def CalcWinner(uid1, uid2, prevGwData, gwData):
+    prevPoint1 = getPlayerPoint(prevGwData, uid1)[0]
+    prevPoint2 = getPlayerPoint(prevGwData, uid2)[0]
+    point1 = getPlayerPoint(gwData, uid1)[0]
+    point2 = getPlayerPoint(gwData, uid2)[0]
+
+    match_1 = 1 if prevPoint1 > prevPoint2 else 0 if prevPoint1 == prevPoint2 else -1
+    match_2 = 1 if point1 > point2 else 0 if point1 == point2 else -1
+
+    winner = ''
+    loser = ''
+
+    result = match_1 + match_2
+    if (result == 0):
+        if (prevPoint1 + point1) > (prevPoint2 + point2):
+            winner = uid1
+            loser = uid2
+        else:
+            winner = uid2
+            loser = uid1
+    else:
+        if result > 0:
+            winner = uid1
+            loser = uid2
+        else:
+            winner = uid2
+            loser = uid1
+    return winner, loser
+
+def GetPlayOffFixture(gw):
+    stage = getStage(gw)
+    url_playoff = 'https://mrbui95.github.io/amvn2425/data/c1/knockout/playoff_' + str(stage) + '.json'
+    response = requests.get(url_playoff)
+    fixture = response.json()
+    return fixture
+
+def CalcWinners(fixtures, gw):
+    prevGwData = getDataResult(gw - 1)
+    gwData = getDataResult(gw)
+
+    winners = {}
+    losers = {}
+
+    for group in fixtures:
+        fixture = fixtures[group]
+        print(fixture)
+        group_winners = []
+        group_losers = []
+        for match in fixture:
+            winner, loser = CalcWinner(str(match[0]), str(match[1]), prevGwData, gwData)
+            group_winners.append(winner)
+            group_losers.append(loser)
+        winners[str(group)] = group_winners
+        losers[str(group)] = group_losers
+
+    return winners, losers
 
 # Ham tinh toan ket qua Playoff luot ve
-def CalcPlayoffSecondLeg():
+def CalcPlayoffSecondLeg(gw):
     print("CalcPlayoffSecondLeg")
+    
+    stage = getStage(gw)
 
-# Ham tinh toan ket qua Tu ket luot di
-def CalcQuarterFinalFirstLeg():
-    print("CalcQuarterFinalFirstLeg")
+    fixtures = GetPlayOffFixture(gw)
+    print(fixtures)
+
+    winners, losers = CalcWinners(fixtures, gw)
+
+    print(winners)
+
+    rank_gw = 12 if stage == 1 else 31
+    rank = getRank(rank_gw)
+
+    for group in rank:
+        rank[group] = sorted(rank[group], key=lambda x: (x['point'], x['total_points']), reverse=True)
+
+    data = {}
+    # Tu ket C1
+    c1 = [
+        [int(rank["c1"][0]["id"]), int(rank["c1"][7]["id"])],
+        [int(rank["c1"][1]["id"]), int(rank["c1"][6]["id"])],
+        [int(rank["c1"][2]["id"]), int(rank["c1"][5]["id"])],
+        [int(rank["c1"][3]["id"]), int(rank["c1"][4]["id"])]
+    ]
+    data['c1'] = c1
+    # Tu ket C2
+    c2 = [
+        [int(rank["c2"][0]["id"]), int(winners["c2"][0])],
+        [int(rank["c2"][1]["id"]), int(winners["c2"][1])],
+        [int(rank["c2"][2]["id"]), int(winners["c2"][2])],
+        [int(rank["c2"][3]["id"]), int(winners["c2"][3])]
+    ]
+    data['c2'] = c2
+    # Tu ket C3
+    c3 = [
+        [int(rank["c3"][0]["id"]), int(winners["c3"][0])],
+        [int(rank["c3"][1]["id"]), int(winners["c3"][1])],
+        [int(rank["c3"][2]["id"]), int(winners["c3"][2])],
+        [int(rank["c3"][3]["id"]), int(winners["c3"][3])]
+    ]
+    data['c3'] = c3
+    # Tu ket C4
+    c4 = [
+        [int(rank["c4"][0]["id"]), int(winners["c4"][0])],
+        [int(rank["c4"][1]["id"]), int(winners["c4"][1])],
+        [int(rank["c4"][2]["id"]), int(winners["c4"][2])],
+        [int(rank["c4"][3]["id"]), int(winners["c4"][3])]
+    ]
+    data['c4'] = c4
+    print(data)
+
+    
+
+    file_name = file_prefix + '\\c1\\knockout\\quarter_' + str(stage) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Update Fixture Quarter Final ' + str(stage))
+
+
+def GetQuarterFinalFixture(gw):
+    stage = getStage(gw)
+    url_quarter = 'https://mrbui95.github.io/amvn2425/data/c1/knockout/quarter_' + str(stage) + '.json'
+    response = requests.get(url_quarter)
+    fixture = response.json()
+    return fixture
 
 # Ham tinh toan ket qua Tu ket luot ve
-def CalcQuarterFinalSecondLeg():
+def CalcQuarterFinalSecondLeg(gw):
     print("CalcQuarterFinalSecondLeg")
 
-# Ham tinh toan ket qua Ban ket luot di
-def CalcSemiFinalFirstLeg():
-    print("CalcSemiFinalFirstLeg")
+    stage = getStage(gw)
+    
+    fixtures = GetQuarterFinalFixture(gw)
+    print(fixtures)
+
+    winners, losers = CalcWinners(fixtures, gw)
+    print(winners)
+
+    data = {}
+    # Ban ket C1
+    c1 = [
+        [int(winners["c1"][0]), int(winners["c1"][1])],
+        [int(winners["c1"][2]), int(winners["c1"][3])],
+    ]
+    data['c1'] = c1
+    # Ban ket C2
+    c2 = [
+        [int(winners["c2"][0]), int(winners["c2"][1])],
+        [int(winners["c2"][2]), int(winners["c2"][3])],
+    ]
+    data['c2'] = c2
+    # Ban ket C3
+    c3 = [
+        [int(winners["c3"][0]), int(winners["c3"][1])],
+        [int(winners["c3"][2]), int(winners["c3"][3])],
+    ]
+    data['c3'] = c3
+    # Ban ket C4
+    c4 = [
+        [int(winners["c4"][0]), int(winners["c4"][1])],
+        [int(winners["c4"][2]), int(winners["c4"][3])],
+    ]
+    data['c4'] = c4
+    print(data)
+
+    file_name = file_prefix + '\\c1\\knockout\\semi_' + str(stage) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Update Fixture Semi Final ' + str(stage))
+
+
+def GetSemiFinalFixture(gw):
+    stage = getStage(gw)
+    url_semi = 'https://mrbui95.github.io/amvn2425/data/c1/knockout/semi_' + str(stage) + '.json'
+    response = requests.get(url_semi)
+    fixture = response.json()
+    return fixture
 
 # Ham tinh toan ket qua Ban ket luot ve
-def CalcSemiFinalSecondLeg():
+def CalcSemiFinalSecondLeg(gw):
     print("CalcSemiFinalSecondLeg")
 
+    stage = getStage(gw)
+    
+    fixtures = GetSemiFinalFixture(gw)
+    print(fixtures)
+
+    winners, losers = CalcWinners(fixtures, gw)
+    data = {}
+
+    final_data = {}
+    final_data['c1'] = [[int(winners['c1'][0]), int(winners['c1'][1])]]
+    final_data['c2'] = [[int(winners['c2'][0]), int(winners['c2'][1])]]
+    final_data['c3'] = [[int(winners['c3'][0]), int(winners['c3'][1])]]
+    final_data['c4'] = [[int(winners['c4'][0]), int(winners['c4'][1])]]
+
+    third_place_data = {}
+    third_place_data['c1'] = [[int(losers['c1'][0]), int(losers['c1'][1])]]
+    third_place_data['c2'] = [[int(losers['c2'][0]), int(losers['c2'][1])]]
+    third_place_data['c3'] = [[int(losers['c3'][0]), int(losers['c3'][1])]]
+    third_place_data['c4'] = [[int(losers['c4'][0]), int(losers['c4'][1])]]
+
+    data['final'] = final_data
+    data['thirdPlace'] = third_place_data
+
+    print(data)
+
+    file_name = file_prefix + '\\c1\\knockout\\final_' + str(stage) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Update Fixture Final ' + str(stage))
+
+
 # Ham tinh toan ket qua Tranh 3-4
-def CalcThirdPlace():
+def CalcThirdPlace(gw):
     print("CalcThirdPlace")
 
 # Ham tinh toan ket qua Chung ket
-def CalcChampionship():
+def CalcChampionship(gw):
     print("CalcChampionship")
 
-def CalcSecondChance():
+def CalcSecondChance(gw):
     print("CalcSecondChance")
 
 
@@ -224,7 +576,7 @@ def CalcSecondChance():
 #print(current_gw)
 
 #Fix cung current_gw de test
-current_gw = 4
+current_gw = 18
 
 
 #getDataGw(current_gw)
@@ -236,38 +588,30 @@ elif (current_gw == 4):
     # Ket thuc vong phan hang - lay ket quả classic va chia danh sach thanh vien vao 4 nhóm C1,C2,C3,C4, tu dong sinh lich thi dau ngau nhien
     stage, group_c1, group_c2, group_c3, group_c4 = SplitGroup(current_gw)
     RandomFixture(stage, group_c1, group_c2, group_c3, group_c4)
+    CreateDefaultRank(current_gw)
 elif (current_gw < 12):
     # Giai doan vong bang, tinh diem theo lich thi dau
-    CalcGroupResult()
+    CalcGroupResult(current_gw)
 elif (current_gw == 12):
     # Vong dau cuoi vong bang => tinh toan nguoi choi playoff, nguoi choi vao vong tu ket
-    CalcGroupResult()
-    CalcKnockOutResult()
-elif (current_gw == 13):
-    # Playoff luot di
-    CalcPlayoffFirstLeg()
+    rank = CalcGroupResult(current_gw)
+    CalcPlayOffResult(current_gw, rank)
 elif (current_gw == 14):
     # Playoff luot ve
-    CalcPlayoffSecondLeg()
-elif (current_gw == 15):
-    # Tu ket luot di
-    CalcQuarterFinalFirstLeg()
+    CalcPlayoffSecondLeg(current_gw)
 elif (current_gw == 16):
     # Tu ket luot ve
-    CalcQuarterFinalSecondLeg()
-elif (current_gw == 17):
-    # Ban ket luot di
-    CalcSemiFinalFirstLeg()
+    CalcQuarterFinalSecondLeg(current_gw)
 elif (current_gw == 18):
     # Ban ket luot ve
-    CalcSemiFinalSecondLeg()
+    CalcSemiFinalSecondLeg(current_gw)
 elif (current_gw == 19):
     # Tranh 3-4
-    CalcThirdPlace()
+    CalcThirdPlace(current_gw)
     # Tranh chuc vo dich
-    CalcChampionship()
+    CalcChampionship(current_gw)
     # Tinh toan giai Second Chance
-    CalcSecondChance()
+    CalcSecondChance(current_gw)
 
     
 
