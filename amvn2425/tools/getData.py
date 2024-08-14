@@ -51,6 +51,7 @@ def GetUserInfo():
 
     file_name = file_prefix + '\\u_info.json'
     content = json.dumps(data)
+    print(file_name)
     saveFileAndUpdateGit(file_name, content, 'Update User Info')
 
 # Hàm lay thong tin gameweek hien tai
@@ -593,7 +594,7 @@ def CalcSecondChance(gw):
 #print(current_gw)
 
 #Fix cung current_gw de test
-current_gw = 18
+current_gw = 0
 
 
 #getDataGw(current_gw)
