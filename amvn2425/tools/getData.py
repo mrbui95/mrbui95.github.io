@@ -36,6 +36,23 @@ def saveFileAndUpdateGit(file_name, content, commit):
     saveFile(file_name, content)
     updateGit(file_name, commit)
 
+def GetUserInfo():
+    url_user = 'https://mrbui95.github.io/amvn2425/data/user_c1.json'
+    response = requests.get(url_user)
+    listTeam = response.json()['league']
+
+    data = {}
+
+    for team in listTeam:
+        print(team)
+        response = requests.get('https://fantasy.premierleague.com/api/entry/' + team + '/')
+        uInfo = response.json()
+        data[team] = uInfo
+
+    file_name = file_prefix + '\\u_info.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Update User Info')
+
 # Hàm lay thong tin gameweek hien tai
 def getCurrGw():
     url_curr_gw = 'https://fantasy.premierleague.com/api/entry/1/'
@@ -581,7 +598,9 @@ current_gw = 18
 
 #getDataGw(current_gw)
 
-if (current_gw < 4):
+if (current_gw == 0):
+    GetUserInfo()
+elif (current_gw < 4):
     # Vong phan hang - chi lay ket qua classic => khong lam gi
     print('Vong phan hang - chi lay ket qua classic => khong lam gi')
 elif (current_gw == 4):
