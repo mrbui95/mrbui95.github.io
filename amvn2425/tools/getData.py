@@ -590,14 +590,14 @@ def CalcSecondChance(gw):
     print("CalcSecondChance")
 
 
-#current_gw = getCurrGw()
-#print(current_gw)
+current_gw = getCurrGw()
+print(current_gw)
 
 #Fix cung current_gw de test
-current_gw = 0
+#current_gw = 0
 
 
-#getDataGw(current_gw)
+getDataGw(current_gw)
 
 if (current_gw == 0):
     GetUserInfo()
