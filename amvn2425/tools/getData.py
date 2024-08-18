@@ -83,13 +83,30 @@ def getListPlayerUid():
     return listPlayerUid
 
 
+# Ham lay danh sach cau thu
+def getDataLive(gw):
+    data={}
+    headers = {'x-requested-with':'https://fantasy.premierleague.com', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'}
+    url = 'https://fantasy.premierleague.com/api/event/' + str(gw) + '/live/'
+    print('-------------GET DATA LIVE' + str(gw) + '----------------')
+    print(url)
+    response = requests.get(url)
+    data = response.json()
+    print(json.dumps(data))
+    
+    file_name = file_prefix + '\\c1\\result\\live' + str(gw) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Get GW Player Live Data')
+
+    return data
+
 # Ham lay ket qua vong choi
 def getDataGw(gw):
     data={}
     headers = {'x-requested-with':'https://fantasy.premierleague.com', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'}
     listPlayerUid = getListPlayerUid()
     for uid in listPlayerUid:
-        url = 'https://fantasy.premierleague.com/api/entry/' + uid + '/event/' + str(current_gw) + '/picks/'
+        url = 'https://fantasy.premierleague.com/api/entry/' + uid + '/event/' + str(gw) + '/picks/'
         print('-------------' + uid + '----------------')
         print(url)
         response = requests.get(url)
@@ -100,6 +117,8 @@ def getDataGw(gw):
     file_name = file_prefix + '\\c1\\result\\' + str(gw) + '.json'
     content = json.dumps(data)
     saveFileAndUpdateGit(file_name, content, 'Get GW User Data')
+
+    return data
 
 def getDataResult(gw):
     url_data_result = 'https://mrbui95.github.io/amvn2425/data/c1/result/' + str(gw) + '.json'
@@ -119,6 +138,48 @@ def getListGroupPlayer(stage):
     response = requests.get(url_group_player)
     group_player = response.json()
     return group_player
+
+def GetCaptionPoint(player_data, data_live):
+    captain_pick = [pick for pick in player_data['picks'] if pick['is_captain']]
+    captain_id = captain_pick[0]['element']
+    captain_multi = captain_pick[0]['multiplier']
+    captain = next((item for item in data_live['elements'] if item['id'] == captain_id), None)
+    point = captain['stats']['total_points']
+    minutes = captain['stats']['minutes']
+    yc = captain['stats']['yellow_cards']
+    rc = captain['stats']['red_cards']
+
+    if point != 0 or minutes != 0 or yc != 0 or rc != 0:
+        return point * captain_multi
+    
+
+    vice_captain_pick = [pick for pick in player_data['picks'] if pick['is_vice_captain']]
+    vice_captain_id = vice_captain_pick[0]['element']
+    vice_captain = next((item for item in data_live['elements'] if item['id'] == vice_captain_id), None)
+    vice_point = vice_captain['stats']['total_points']
+    return vice_point * captain_multi
+
+def GetTotalCap(gw):
+    if gw == 1 or gw == 0:
+        return {}
+    url_total_cap = 'https://mrbui95.github.io/amvn2425/data/c1/result/total_cap_' + str(gw) + '.json'
+    response = requests.get(url_total_cap)
+    total_cap = response.json()
+    return total_cap
+
+def CalcTotalCap(gw, gw_data, data_live):
+    point_rank = GetTotalCap(gw)
+    listPlayerUid = getListPlayerUid()
+    for uid in listPlayerUid:
+        point = GetCaptionPoint(gw_data[str(uid)], data_live)
+        if str(uid) in point_rank:
+            point_rank[str(uid)] = point_rank[str(uid)] + point
+        else:
+            point_rank[str(uid)] = point
+
+    file_name = file_prefix + '\\c1\\result\\total_cap_' + str(gw) + '.json'
+    content = json.dumps(point_rank)
+    saveFileAndUpdateGit(file_name, content, 'Update Total Cap')
 
 def getStage(gw):
     stage = 1
@@ -597,13 +658,16 @@ print(current_gw)
 #current_gw = 0
 
 
-getDataGw(current_gw)
+data_live = getDataLive(current_gw)
+
+gw_data = getDataGw(current_gw)
 
 if (current_gw == 0):
     GetUserInfo()
 elif (current_gw < 4):
     # Vong phan hang - chi lay ket qua classic => khong lam gi
     print('Vong phan hang - chi lay ket qua classic => khong lam gi')
+    CalcTotalCap(current_gw, gw_data, data_live)
 elif (current_gw == 4):
     # Ket thuc vong phan hang - lay ket quả classic va chia danh sach thanh vien vao 4 nhóm C1,C2,C3,C4, tu dong sinh lich thi dau ngau nhien
     stage, group_c1, group_c2, group_c3, group_c4 = SplitGroup(current_gw)
