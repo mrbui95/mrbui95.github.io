@@ -169,7 +169,7 @@ def GetTotalCap(gw):
     return total_cap
 
 def CalcTotalCap(gw, gw_data, data_live):
-    point_rank = GetTotalCap(gw)
+    point_rank = GetTotalCap(gw - 1)
     listPlayerUid = getListPlayerUid()
     for uid in listPlayerUid:
         point = GetCaptionPoint(gw_data[str(uid)], data_live)
