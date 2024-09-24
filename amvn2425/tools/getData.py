@@ -664,11 +664,11 @@ def CalcSecondChance(gw):
     print("CalcSecondChance")
 
 
-#current_gw = getCurrGw()
-#print(current_gw)
+current_gw = getCurrGw()
+print(current_gw)
 
 #Fix cung current_gw de test
-current_gw = 4
+#current_gw = 4
 
 
 data_live = getDataLive(current_gw)
@@ -679,17 +679,19 @@ if (current_gw == 0):
     GetUserInfo()
 elif (current_gw < 4):
     # Vong phan hang - chi lay ket qua classic => khong lam gi
-    print('Vong phan hang - chi lay ket qua classic => khong lam gi')
     CalcTotalCap(current_gw, gw_data, data_live)
+    print('Vong phan hang - chi lay ket qua classic => khong lam gi')
 elif (current_gw == 4):
     # Ket thuc vong phan hang - lay ket qua classic va chia danh sach thanh vien vao 4 nhom C1,C2,C3,C4, tu dong sinh lich thi dau ngau nhien
+    CalcTotalCap(current_gw, gw_data, data_live)
     stage, group_c1, group_c2, group_c3, group_c4 = SplitGroup(current_gw)
     SaveGroup(stage, group_c1, group_c2, group_c3, group_c4)
     #RandomFixture(stage, group_c1, group_c2, group_c3, group_c4)
     #CreateDefaultRank(current_gw)
 elif (current_gw < 12):
     # Giai doan vong bang, tinh diem theo lich thi dau
-    CalcGroupResult(current_gw)
+    CalcTotalCap(current_gw, gw_data, data_live)
+    #CalcGroupResult(current_gw)
 elif (current_gw == 12):
     # Vong dau cuoi vong bang => tinh toan nguoi choi playoff, nguoi choi vao vong tu ket
     rank = CalcGroupResult(current_gw)
