@@ -5,7 +5,8 @@ import time
 import random
 from git import Repo
 
-repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+#repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+repo_dir = 'E:\\thanhbh3\\project\\mrbui95.github.io'
 
 file_prefix = repo_dir + '\\amvn2425\\data'
 
@@ -22,15 +23,15 @@ def saveFile(file_name, content):
 def updateGit(file_name, commit):
     time.sleep(10)
     print('upload git: ' + commit)
-    repo = Repo(repo_dir)
-    file_list = [
-        file_name
-    ]
-    commit_message = commit + ' - ' + str(time.time())
-    repo.index.add(file_list)
-    repo.index.commit(commit_message)
-    origin = repo.remote('origin')
-    origin.push()
+    #repo = Repo(repo_dir)
+    #file_list = [
+    #    file_name
+    #]
+    #commit_message = commit + ' - ' + str(time.time())
+    #repo.index.add(file_list)
+    #repo.index.commit(commit_message)
+    #origin = repo.remote('origin')
+    #origin.push()
     
 def saveFileAndUpdateGit(file_name, content, commit):
     saveFile(file_name, content)
@@ -54,7 +55,7 @@ def GetUserInfo():
     print(file_name)
     saveFileAndUpdateGit(file_name, content, 'Update User Info')
 
-# Hàm lay thong tin gameweek hien tai
+# Ham lay thong tin gameweek hien tai
 def getCurrGw():
     url_curr_gw = 'https://fantasy.premierleague.com/api/entry/1/'
     response_curr_gw = requests.get(url_curr_gw)
@@ -245,7 +246,7 @@ def getRank(gw):
 
 
 
-# Ham sinh Fixture tự động
+# Ham sinh Fixture tu dong
 def make_fixture(teams):
     random.shuffle(teams)
     if len(teams) % 2:
@@ -280,6 +281,18 @@ def RandomFixture(stage, group_c1, group_c2, group_c3, group_c4):
     file_name = file_prefix + '\\c1\\group\\fixture_' + str(stage) + '.json'
     content = json.dumps(data)
     saveFileAndUpdateGit(file_name, content, 'Update Group Fixture')
+
+def SaveGroup(stage, group_c1, group_c2, group_c3, group_c4):
+    data = {}
+
+    data['c1'] = group_c1
+    data['c2'] = group_c2
+    data['c3'] = group_c3
+    data['c4'] = group_c4
+
+    file_name = file_prefix + '\\c1\\group\\group_' + str(stage) + '.json'
+    content = json.dumps(data)
+    saveFileAndUpdateGit(file_name, content, 'Update Group Team')
 
 
 # Ham tinh toan danh sach nguoi choi vao 4 nhom C1, C2, C3, C4
@@ -651,11 +664,11 @@ def CalcSecondChance(gw):
     print("CalcSecondChance")
 
 
-current_gw = getCurrGw()
-print(current_gw)
+#current_gw = getCurrGw()
+#print(current_gw)
 
 #Fix cung current_gw de test
-#current_gw = 0
+current_gw = 4
 
 
 data_live = getDataLive(current_gw)
@@ -669,10 +682,11 @@ elif (current_gw < 4):
     print('Vong phan hang - chi lay ket qua classic => khong lam gi')
     CalcTotalCap(current_gw, gw_data, data_live)
 elif (current_gw == 4):
-    # Ket thuc vong phan hang - lay ket quả classic va chia danh sach thanh vien vao 4 nhóm C1,C2,C3,C4, tu dong sinh lich thi dau ngau nhien
+    # Ket thuc vong phan hang - lay ket qua classic va chia danh sach thanh vien vao 4 nhom C1,C2,C3,C4, tu dong sinh lich thi dau ngau nhien
     stage, group_c1, group_c2, group_c3, group_c4 = SplitGroup(current_gw)
-    RandomFixture(stage, group_c1, group_c2, group_c3, group_c4)
-    CreateDefaultRank(current_gw)
+    SaveGroup(stage, group_c1, group_c2, group_c3, group_c4)
+    #RandomFixture(stage, group_c1, group_c2, group_c3, group_c4)
+    #CreateDefaultRank(current_gw)
 elif (current_gw < 12):
     # Giai doan vong bang, tinh diem theo lich thi dau
     CalcGroupResult(current_gw)
