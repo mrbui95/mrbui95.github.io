@@ -5,8 +5,8 @@ import time
 import random
 from git import Repo
 
-#repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
-repo_dir = 'E:\\thanhbh3\\project\\mrbui95.github.io'
+repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
+#repo_dir = 'E:\\thanhbh3\\project\\mrbui95.github.io'
 
 file_prefix = repo_dir + '\\amvn2425\\data'
 
@@ -23,15 +23,15 @@ def saveFile(file_name, content):
 def updateGit(file_name, commit):
     time.sleep(10)
     print('upload git: ' + commit)
-    #repo = Repo(repo_dir)
-    #file_list = [
-    #    file_name
-    #]
-    #commit_message = commit + ' - ' + str(time.time())
-    #repo.index.add(file_list)
-    #repo.index.commit(commit_message)
-    #origin = repo.remote('origin')
-    #origin.push()
+    repo = Repo(repo_dir)
+    file_list = [
+        file_name
+    ]
+    commit_message = commit + ' - ' + str(time.time())
+    repo.index.add(file_list)
+    repo.index.commit(commit_message)
+    origin = repo.remote('origin')
+    origin.push()
     
 def saveFileAndUpdateGit(file_name, content, commit):
     saveFile(file_name, content)
@@ -168,6 +168,10 @@ def GetTotalCap(gw):
     total_cap = response.json()
     return total_cap
 
+def GetTotalCapByUser(total_cap, uid):
+    return total_cap[str(uid)]
+
+
 def CalcTotalCap(gw, gw_data, data_live):
     point_rank = GetTotalCap(gw - 1)
     listPlayerUid = getListPlayerUid()
@@ -181,6 +185,7 @@ def CalcTotalCap(gw, gw_data, data_live):
     file_name = file_prefix + '\\c1\\result\\total_cap_' + str(gw) + '.json'
     content = json.dumps(point_rank)
     saveFileAndUpdateGit(file_name, content, 'Update Total Cap')
+    return point_rank
 
 def getStage(gw):
     stage = 1
@@ -217,6 +222,11 @@ def saveRankData(gw, rank):
     content = json.dumps(rank)
     saveFileAndUpdateGit(file_name, content, 'Update GW Rank ' + str(gw))
 
+def saveRankClassicData(gw, rank):
+    file_name = file_prefix + '\\c1\\group\\rank_classic_' + str(gw) + '.json'
+    content = json.dumps(rank)
+    saveFileAndUpdateGit(file_name, content, 'Update GW Rank Classic' + str(gw))
+
 def CreateDefaultRank(gw):
     stage = getStage(gw)
     group_player = getListGroupPlayer(stage)
@@ -237,12 +247,17 @@ def CreateDefaultRank(gw):
     return data
 
 def getRank(gw):
-    url_rank = 'https://mrbui95.github.io/amvn2425/data/c1/group/rank_' + str(gw) + '.json'
+    url_rank = 'https://mrbui95.github.io/amvn2425/data/c1/group/rank_classic_' + str(gw) + '.json'
     response = requests.get(url_rank)
     rank = response.json()
     return rank
 
 
+def GetGroup(stage):
+    url_group = 'https://mrbui95.github.io/amvn2425/data/c1/group/group_' + str(stage) + '.json'
+    response = requests.get(url_group)
+    group = response.json()
+    return group
 
 
 
@@ -293,6 +308,8 @@ def SaveGroup(stage, group_c1, group_c2, group_c3, group_c4):
     file_name = file_prefix + '\\c1\\group\\group_' + str(stage) + '.json'
     content = json.dumps(data)
     saveFileAndUpdateGit(file_name, content, 'Update Group Team')
+
+
 
 
 # Ham tinh toan danh sach nguoi choi vao 4 nhom C1, C2, C3, C4
@@ -360,6 +377,95 @@ def updateRankData(rank, group, uid1, point_add1, total_points1, uid2, point_add
         if done1 and done2:
             break
 
+# Ham tinh toan ket qua classic Group
+def CalcGroupClassicResult(total_cap, gw_data, current_gw):
+    print('CalcGroupClassicResult')
+
+    stage = 1
+    gw_data_start = None
+    total_cap_start = None
+    if (current_gw < 20):
+        stage = 1
+        gw_data_start = getDataResult(4)
+        total_cap_start = GetTotalCap(4)
+    else:
+        stage = 2
+        gw_data_start = getDataResult(23)
+        total_cap_start = GetTotalCap(23)
+    
+    group = GetGroup(stage)
+
+    print(group)
+
+    rank = {}
+
+    c1 = group['c1']
+    rank_c1 = []
+    for uid in c1:
+        print(uid)
+        point, total_points = getPlayerPoint(gw_data, uid)
+        point_start, total_points_start = getPlayerPoint(gw_data_start, uid)
+        cap = GetTotalCapByUser(total_cap, uid)
+        start_cap = GetTotalCapByUser(total_cap_start, uid)
+        player = {}
+        player['id'] = str(uid)
+        player['total_points'] = total_points - total_points_start
+        player['total_cap'] = cap - start_cap
+        rank_c1.append(player)
+
+    rank['c1'] = rank_c1
+
+    c2 = group['c2']
+    rank_c2 = []
+    for uid in c2:
+        print(uid)
+        point, total_points = getPlayerPoint(gw_data, uid)
+        point_start, total_points_start = getPlayerPoint(gw_data_start, uid)
+        cap = GetTotalCapByUser(total_cap, uid)
+        start_cap = GetTotalCapByUser(total_cap_start, uid)
+        player = {}
+        player['id'] = str(uid)
+        player['total_points'] = total_points - total_points_start
+        player['total_cap'] = cap - start_cap
+        rank_c2.append(player)
+
+    rank['c2'] = rank_c2
+
+    c3 = group['c3']
+    rank_c3 = []
+    for uid in c3:
+        print(uid)
+        point, total_points = getPlayerPoint(gw_data, uid)
+        point_start, total_points_start = getPlayerPoint(gw_data_start, uid)
+        cap = GetTotalCapByUser(total_cap, uid)
+        start_cap = GetTotalCapByUser(total_cap_start, uid)
+        player = {}
+        player['id'] = str(uid)
+        player['total_points'] = total_points - total_points_start
+        player['total_cap'] = cap - start_cap
+        rank_c3.append(player)
+
+    rank['c3'] = rank_c3    
+
+    c4 = group['c4']
+    rank_c4 = []
+    for uid in c4:
+        print(uid)
+        point, total_points = getPlayerPoint(gw_data, uid)
+        point_start, total_points_start = getPlayerPoint(gw_data_start, uid)
+        cap = GetTotalCapByUser(total_cap, uid)
+        start_cap = GetTotalCapByUser(total_cap_start, uid)
+        player = {}
+        player['id'] = str(uid)
+        player['total_points'] = total_points - total_points_start
+        player['total_cap'] = cap - start_cap
+        rank_c4.append(player)
+
+    rank['c4'] = rank_c4
+
+    saveRankClassicData(current_gw, rank)
+    return rank
+
 
 # Ham tinh toan ket qua thang thua vong bang, tinh toan bang xep hang tam thoi
 def CalcGroupResult(current_gw):
@@ -403,8 +509,10 @@ def CalcPlayOffResult(current_gw, rank):
 
     stage = getStage(current_gw)
 
+    print(rank)
+
     for group in rank:
-        rank[group] = sorted(rank[group], key=lambda x: (x['point'], x['total_points']), reverse=True)
+        rank[group] = sorted(rank[group], key=lambda x: (x['total_points'], x['total_cap']), reverse=True)
 
     data = {}
     # Playoff tu ket C2
@@ -506,17 +614,22 @@ def CalcPlayoffSecondLeg(gw):
     stage = getStage(gw)
 
     fixtures = GetPlayOffFixture(gw)
+    print('------fixtures-------')
     print(fixtures)
 
     winners, losers = CalcWinners(fixtures, gw)
 
+    print('------winners-------')
     print(winners)
 
     rank_gw = 12 if stage == 1 else 31
     rank = getRank(rank_gw)
 
+    print('------rank-------')
+    print(rank)
+
     for group in rank:
-        rank[group] = sorted(rank[group], key=lambda x: (x['point'], x['total_points']), reverse=True)
+        rank[group] = sorted(rank[group], key=lambda x: (x['total_points'], x['total_cap']), reverse=True)
 
     data = {}
     # Tu ket C1
@@ -668,44 +781,45 @@ current_gw = getCurrGw()
 print(current_gw)
 
 #Fix cung current_gw de test
-#current_gw = 4
+#current_gw = 23
 
 
 data_live = getDataLive(current_gw)
 
 gw_data = getDataGw(current_gw)
+#gw_data = getDataResult(current_gw)
+
+total_cap = CalcTotalCap(current_gw, gw_data, data_live)
 
 if (current_gw == 0):
     GetUserInfo()
-elif (current_gw < 4):
+elif (current_gw < 4 or (current_gw > 19 and current_gw < 23)):
     # Vong phan hang - chi lay ket qua classic => khong lam gi
-    CalcTotalCap(current_gw, gw_data, data_live)
     print('Vong phan hang - chi lay ket qua classic => khong lam gi')
-elif (current_gw == 4):
+elif (current_gw == 4 or current_gw == 23):
     # Ket thuc vong phan hang - lay ket qua classic va chia danh sach thanh vien vao 4 nhom C1,C2,C3,C4, tu dong sinh lich thi dau ngau nhien
-    CalcTotalCap(current_gw, gw_data, data_live)
     stage, group_c1, group_c2, group_c3, group_c4 = SplitGroup(current_gw)
     SaveGroup(stage, group_c1, group_c2, group_c3, group_c4)
     #RandomFixture(stage, group_c1, group_c2, group_c3, group_c4)
     #CreateDefaultRank(current_gw)
-elif (current_gw < 12):
+elif (current_gw < 12 or (current_gw > 19 and current_gw < 31)):
     # Giai doan vong bang, tinh diem theo lich thi dau
-    CalcTotalCap(current_gw, gw_data, data_live)
+    CalcGroupClassicResult(total_cap, gw_data, current_gw)
     #CalcGroupResult(current_gw)
-elif (current_gw == 12):
+elif (current_gw == 12 or current_gw == 31):
     # Vong dau cuoi vong bang => tinh toan nguoi choi playoff, nguoi choi vao vong tu ket
-    rank = CalcGroupResult(current_gw)
+    rank = CalcGroupClassicResult(total_cap, gw_data, current_gw)
     CalcPlayOffResult(current_gw, rank)
-elif (current_gw == 14):
+elif (current_gw == 14 or current_gw == 33):
     # Playoff luot ve
     CalcPlayoffSecondLeg(current_gw)
-elif (current_gw == 16):
+elif (current_gw == 16 or current_gw == 35):
     # Tu ket luot ve
     CalcQuarterFinalSecondLeg(current_gw)
-elif (current_gw == 18):
+elif (current_gw == 18 or current_gw == 37):
     # Ban ket luot ve
     CalcSemiFinalSecondLeg(current_gw)
-elif (current_gw == 19):
+elif (current_gw == 19 or current_gw == 39):
     # Tranh 3-4
     CalcThirdPlace(current_gw)
     # Tranh chuc vo dich
