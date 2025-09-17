@@ -381,7 +381,7 @@ def updateRankData(rank, group, uid1, point_add1, total_points1, uid2, point_add
 def CalcGroupClassicResult(total_cap, gw_data, current_gw):
     print('CalcGroupClassicResult')
 
-    stage = 1
+    stage = getStage(current_gw)
     gw_data_start = None
     total_cap_start = None
     if (current_gw < 20):
@@ -781,7 +781,7 @@ def CalcSecondChance(gw):
 #print(current_gw)
 
 #Fix cung current_gw de test
-current_gw = 23
+current_gw = 34
 
 
 data_live = getDataLive(current_gw)
@@ -819,7 +819,7 @@ elif (current_gw == 16 or current_gw == 35):
 elif (current_gw == 18 or current_gw == 37):
     # Ban ket luot ve
     CalcSemiFinalSecondLeg(current_gw)
-elif (current_gw == 19 or current_gw == 39):
+elif (current_gw == 19 or current_gw == 38):
     # Tranh 3-4
     CalcThirdPlace(current_gw)
     # Tranh chuc vo dich

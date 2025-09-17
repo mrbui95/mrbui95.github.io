@@ -8,7 +8,7 @@ from git import Repo
 repo_dir = 'F:\\Study\\Github\\mrbui95.github.io'
 #repo_dir = 'E:\\thanhbh3\\project\\mrbui95.github.io'
 
-file_prefix = repo_dir + '\\amvn2425\\data'
+file_prefix = repo_dir + '\\amvn2526\\data'
 
 GROUP_MAX_MEMBER = 16
 
@@ -38,7 +38,7 @@ def saveFileAndUpdateGit(file_name, content, commit):
     updateGit(file_name, commit)
 
 def GetUserInfo():
-    url_user = 'https://mrbui95.github.io/amvn2425/data/user_c1.json'
+    url_user = 'https://mrbui95.github.io/amvn2526/data/user_c1.json'
     response = requests.get(url_user)
     listTeam = response.json()['league']
 
@@ -77,7 +77,7 @@ def getCurrGw():
 
 # Ham lay danh sach id nguoi choi C1
 def getListPlayerUid():
-    url_user_c1 = 'https://mrbui95.github.io/amvn2425/data/user_c1.json'
+    url_user_c1 = 'https://mrbui95.github.io/amvn2526/data/user_c1.json'
     response = requests.get(url_user_c1)
     print(response.json())
     listPlayerUid = response.json()['league']
@@ -122,7 +122,7 @@ def getDataGw(gw):
     return data
 
 def getDataResult(gw):
-    url_data_result = 'https://mrbui95.github.io/amvn2425/data/c1/result/' + str(gw) + '.json'
+    url_data_result = 'https://mrbui95.github.io/amvn2526/data/c1/result/' + str(gw) + '.json'
     response = requests.get(url_data_result)
     # print(response.json())
     gw_data = response.json()
@@ -135,7 +135,7 @@ def getPlayerPoint(gw_data, uid):
     return point, total_points
 
 def getListGroupPlayer(stage):
-    url_group_player = 'https://mrbui95.github.io/amvn2425/data/c1/group/list_stage_' + str(stage) + '.json'
+    url_group_player = 'https://mrbui95.github.io/amvn2526/data/c1/group/list_stage_' + str(stage) + '.json'
     response = requests.get(url_group_player)
     group_player = response.json()
     return group_player
@@ -163,7 +163,7 @@ def GetCaptionPoint(player_data, data_live):
 def GetTotalCap(gw):
     if gw == 1 or gw == 0:
         return {}
-    url_total_cap = 'https://mrbui95.github.io/amvn2425/data/c1/result/total_cap_' + str(gw) + '.json'
+    url_total_cap = 'https://mrbui95.github.io/amvn2526/data/c1/result/total_cap_' + str(gw) + '.json'
     response = requests.get(url_total_cap)
     total_cap = response.json()
     return total_cap
@@ -201,7 +201,7 @@ def getFixture(gw):
     if (current_gw >= 24):
         index = gw - 24
 
-    url_fixture = 'https://mrbui95.github.io/amvn2425/data/c1/group/fixture_' + str(stage) + '.json'
+    url_fixture = 'https://mrbui95.github.io/amvn2526/data/c1/group/fixture_' + str(stage) + '.json'
     response = requests.get(url_fixture)
     fixture = response.json()
     data = {}
@@ -247,14 +247,14 @@ def CreateDefaultRank(gw):
     return data
 
 def getRank(gw):
-    url_rank = 'https://mrbui95.github.io/amvn2425/data/c1/group/rank_classic_' + str(gw) + '.json'
+    url_rank = 'https://mrbui95.github.io/amvn2526/data/c1/group/rank_classic_' + str(gw) + '.json'
     response = requests.get(url_rank)
     rank = response.json()
     return rank
 
 
 def GetGroup(stage):
-    url_group = 'https://mrbui95.github.io/amvn2425/data/c1/group/group_' + str(stage) + '.json'
+    url_group = 'https://mrbui95.github.io/amvn2526/data/c1/group/group_' + str(stage) + '.json'
     response = requests.get(url_group)
     group = response.json()
     return group
@@ -581,7 +581,7 @@ def CalcWinner(uid1, uid2, prevGwData, gwData):
 
 def GetPlayOffFixture(gw):
     stage = getStage(gw)
-    url_playoff = 'https://mrbui95.github.io/amvn2425/data/c1/knockout/playoff_' + str(stage) + '.json'
+    url_playoff = 'https://mrbui95.github.io/amvn2526/data/c1/knockout/playoff_' + str(stage) + '.json'
     response = requests.get(url_playoff)
     fixture = response.json()
     return fixture
@@ -675,7 +675,7 @@ def CalcPlayoffSecondLeg(gw):
 
 def GetQuarterFinalFixture(gw):
     stage = getStage(gw)
-    url_quarter = 'https://mrbui95.github.io/amvn2425/data/c1/knockout/quarter_' + str(stage) + '.json'
+    url_quarter = 'https://mrbui95.github.io/amvn2526/data/c1/knockout/quarter_' + str(stage) + '.json'
     response = requests.get(url_quarter)
     fixture = response.json()
     return fixture
@@ -726,7 +726,7 @@ def CalcQuarterFinalSecondLeg(gw):
 
 def GetSemiFinalFixture(gw):
     stage = getStage(gw)
-    url_semi = 'https://mrbui95.github.io/amvn2425/data/c1/knockout/semi_' + str(stage) + '.json'
+    url_semi = 'https://mrbui95.github.io/amvn2526/data/c1/knockout/semi_' + str(stage) + '.json'
     response = requests.get(url_semi)
     fixture = response.json()
     return fixture
